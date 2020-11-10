@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    float x;
-    float z;
-    public float moveSpeed = 2;
+    float straightSpeed = 24.0f;
+    float rotationSpeed = 2.0f;
+
+    float straight;
+    float rotation;
+
     Rigidbody rb;
-    // Start is called before the first frame update
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        x = Input.GetAxisRaw("Horizontal");
-        z = Input.GetAxisRaw("Vertical");
+        straight = Input.GetAxisRaw("Vertical");
+        rotation = Input.GetAxisRaw("Horizontal");
     }
     
     private void FixedUpdate()
-    { 
-        rb.velocity = new Vector3(x, 0, z) * moveSpeed;
+    {
+        rb.velocity = rb.transform.forward * straight * straightSpeed;
+        rb.angularVelocity = new Vector3(0, rotation, 0) * rotationSpeed;
     }
 }

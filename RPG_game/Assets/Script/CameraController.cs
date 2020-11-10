@@ -4,71 +4,32 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-
-    //X軸の角度を制限するための変数
-    float angleUp = 60f;
-    float angleDown = -60f;
-
-    //プレイヤーアバターをInspectorで入れる
+    // プレイヤーアバターをInspectorで入れる
     [SerializeField] GameObject player;
-    //Main CameraをInspectorで入れる
+    // Main CameraをInspectorで入れる
     [SerializeField] Camera cam;
 
-    //Cameraが回転するスピード
-    [SerializeField] float rotate_speed = 3;
-    //Axisの位置を指定する変数
-    [SerializeField] Vector3 cameraPositionOffset;
-
-    //マウススクロールの値を入れる
-    [SerializeField] float scroll;
-    //マウスホイールの値を保存
-    [SerializeField] float scrollLog;
-
-    void Start()
-    {
-        //CameraのAxisに相対的な位置をlocalPositionで指定
-        cam.transform.localPosition = new Vector3(0, 0, -3);
-        //CameraとAxisの向きを最初だけそろえる
-        cam.transform.localRotation = transform.rotation;
-    }
+    // カメラの相対位置を指定する変数
+    float heightOffset = 12.0f;
+    float backOffset = -20.0f;
 
     void Update()
     {
-        //Axisの位置をプレイヤーアバターの位置＋axisPosで決める
-        transform.position = player.transform.position + cameraPositionOffset;
-        //三人称の時のCameraの位置にマウススクロールの値を足して位置を調整
-        //thirdPosAdd = thirdPos + new Vector3(0, 0, scrollLog);
+        Vector3 playerPosition = player.transform.position;
+        Vector3 playerAngle = player.transform.eulerAngles;
+        Vector2 playerAngleVector = eularAngleToVector2(playerAngle.y);
 
-        //マウススクロールの値を入れる
-        scroll = Input.GetAxis("Mouse ScrollWheel");
-        //scrollAdd += Input.GetAxis("Mouse ScrollWheel") * -10;
-        //マウススクロールの値は動かさないと0になるのでここで保存する
-        scrollLog += Input.GetAxis("Mouse ScrollWheel");
+        cam.transform.position = new Vector3(
+            playerPosition.x + playerAngleVector.y * backOffset,
+            heightOffset,
+            playerPosition.z + playerAngleVector.x * backOffset);
+        cam.transform.rotation = player.transform.rotation;
+    }
 
-        //Cameraの位置、Z軸にスクロール分を加える
-        cam.transform.localPosition
-            = new Vector3(cam.transform.localPosition.x,
-            cam.transform.localPosition.y,
-            cam.transform.localPosition.z + scroll);
-
-        //Cameraの角度にマウスからとった値を入れる
-        transform.eulerAngles += new Vector3(
-            Input.GetAxis("Mouse Y") * rotate_speed,
-            Input.GetAxis("Mouse X") * rotate_speed
-            , 0);
-
-        //X軸の角度
-        float angleX = transform.eulerAngles.x;
-        //X軸の値を180度超えたら360引くことで制限しやすくする
-        if (angleX >= 180)
-        {
-            angleX = angleX - 360;
-        }
-        //Mathf.Clamp(値、最小値、最大値）でX軸の値を制限する
-        transform.eulerAngles = new Vector3(
-            Mathf.Clamp(angleX, angleDown, angleUp),
-            transform.eulerAngles.y,
-            transform.eulerAngles.z
-        );
+    Vector2 eularAngleToVector2(float eularAngle)
+    {
+        float x = Mathf.Cos(eularAngle * Mathf.Deg2Rad);
+        float y = Mathf.Sin(eularAngle * Mathf.Deg2Rad);
+        return new Vector2(x, y);
     }
 }
