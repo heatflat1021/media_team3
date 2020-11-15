@@ -1,0 +1,6 @@
+user = {
+    "license" : "your emotivpro license, which could use for third party app",
+    "client_id" : "your client id",
+    "client_secret" : "your client secret",
+    "debit" : 32
+}
