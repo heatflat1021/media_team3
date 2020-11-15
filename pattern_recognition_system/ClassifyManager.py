@@ -14,13 +14,13 @@ while True:
     files = os.listdir(current_dir)
     dir_list = [f for f in files if os.path.isdir(os.path.join(current_dir, f))]
     if not username in dir_list:
-        print('ユーザー: {}は存在しません。再度ユーザー名を入力してください。'.format(username))
+        print('{}は存在しません。再度ユーザー名を入力してください。'.format(username))
         continue
-    
-    #todo: ユーザーのCSVを読んで基準となる方向を計算する
 
-    os.mkdir(os.path.join(current_dir, username))
-    break
+print('センシングを開始して最初の10秒間で基準となる向きを計測します。')
+print('はじめの10秒間は必ず正面を向いていてください。')
+print('準備ができたらEnterキーを押してください。')
+s = input()
 
 user = EmotivInfo.user
 s = sub_data.Subcribe(user)

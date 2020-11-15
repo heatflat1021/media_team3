@@ -192,7 +192,7 @@ history = model.fit(X_train,
                     epochs=30,
                     verbose=1,
                     validation_data=(X_valid,Y_valid))
-model.save('{}.h5'.format(username))
+model.save('./{}/model.h5'.format(username))
 
 #####################################################
 
