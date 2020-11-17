@@ -1,4 +1,3 @@
-from LearnManager import Command
 from typing import List
 import websocket #'pip install websocket-client' for install
 from datetime import datetime
