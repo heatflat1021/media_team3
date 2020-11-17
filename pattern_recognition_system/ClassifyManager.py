@@ -3,6 +3,7 @@ import sub_data
 
 import csv
 import os
+import shutil
 
 while True:
     print('以前に作成したユーザー名を入力してください')
@@ -17,6 +18,8 @@ while True:
         continue
 
     break
+
+shutil.copy('./{}/model.h5'.format(username), './../')
 
 user = EmotivInfo.user
 subscribe = sub_data.Subcribe(user)

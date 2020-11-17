@@ -6,6 +6,8 @@ import ssl
 import time
 import sys
 import math
+import numpy as np
+import tensorflow as tf
 
 # define request id
 QUERY_HEADSET_ID                    =   1
@@ -31,7 +33,11 @@ DATA_LENGTH = 640
 MOTION_SENSING_FREQUENCY = 64
 REFERENCE_SENSING_SECONDS = 8
 THRESHOLD_ANGLE = 20
+EEG_COMMAND_GENERATION_SKIP_RATE = 8
 
+mov_file_path = './../mov.txt'
+eeg_file_path = './../eeg.txt'
+eeg_commands = ['NEUTRAL', 'STRAIGHT', 'SWORD', 'MAGIC1', 'MAGIC2']
 
 class DataCashQueue():
     def __init__(self, queue_length):
@@ -49,14 +55,10 @@ class DataCashQueue():
             del self.queue[0]
         self.queue.append(new_data)
     
-    def sum_all_items(self):
-        sum = [0]*3
-        for item in self.queue:
-            sum = [x + y for (x, y) in zip(sum, item)]
-        return sum
-    
-    def average(self):
-        return [x/self.queue_length for x in self.sum_all_items()]
+    def reshape(self):
+        X = np.array(self.queue)
+        X = X.reshape(1, X.shape[0], X.shape[1], 1)
+        return X
 
 class Cortex():
     def __init__(self, user, debug_mode=False):
@@ -321,6 +323,8 @@ class Cortex():
         return refY, refZ
 
     def sub_request_and_realtime_process(self, minY, maxY, minZ, maxZ, refY, refZ):
+        model = tf.keras.models.load_model('./../model.h5', compile=True)
+
         sub_request_json = {
             "jsonrpc": "2.0", 
             "method": "subscribe", 
@@ -336,18 +340,23 @@ class Cortex():
         
         eeg_cash = DataCashQueue(DATA_LENGTH)
 
+        skip_counter = 0
         while True:
             new_data = self.ws.recv()
             new_data = json.loads(new_data)
 
+            # EEGによるコマンド生成
             if 'eeg' in new_data:
                 eeg_cash.update(new_data['eeg'][2:16])
-                if eeg_cash.isFulfilled():
-                    # EEGによるコマンド生成
-                    print("update EEG command")
+                skip_counter += 1
+                if eeg_cash.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
+                    eeg_command = eeg_commands[np.argmax(model.predict(eeg_cash.reshape()))]
+                    f = open(eeg_file_path, mode='w')
+                    f.write(eeg_command)
+                    f.close()
 
+            # モーションによるコマンド生成
             if 'mot' in new_data:
-                # モーションによるコマンド生成
                 y = self.normalize_to_plus_minus_one(new_data['mot'][10], minY, maxY)
                 z = self.normalize_to_plus_minus_one(new_data['mot'][11], minZ, maxZ)
             
@@ -356,18 +365,17 @@ class Cortex():
                 
                 angle = angle % 360
                 angle = angle if angle <= 180 else angle - 360
-                print(angle)
+
+                mov_command = ""
                 if abs(angle) < THRESHOLD_ANGLE:
-                    # TODO: update to straight
-                    print('straight')
+                    mov_command = 'STRAIGHT'
                 elif 0 < angle:
-                    # TODO: update to right
-                    print('right')
+                    mov_command = 'RIGHT'
                 else:
-                    # TODO: update to left
-                    print('left')
-            
-            print("\n")
+                    mov_command = 'LEFT'
+                f = open(mov_file_path, mode='w')
+                f.write(mov_command)
+                f.close()
 
     def sub_request(self, stream):
         print('subscribe request --------------------------------')
