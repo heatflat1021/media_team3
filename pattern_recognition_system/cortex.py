@@ -1,3 +1,4 @@
+from LearnManager import Command
 from typing import List
 import websocket #'pip install websocket-client' for install
 from datetime import datetime
@@ -34,6 +35,7 @@ MOTION_SENSING_FREQUENCY = 64
 REFERENCE_SENSING_SECONDS = 8
 THRESHOLD_ANGLE = 20
 EEG_COMMAND_GENERATION_SKIP_RATE = 8
+COMMAND_CASH_LENGTH = 4
 
 mov_file_path = './../mov.txt'
 eeg_file_path = './../eeg.txt'
@@ -319,7 +321,7 @@ class Cortex():
                 y_data[i] = self.normalize_to_plus_minus_one(y, minY, maxY)
                 z_data[i] = self.normalize_to_plus_minus_one(z, minZ, maxZ)
         
-        refY, refZ = sum(y_data) / len(y_data), sum(z_data) / len(z_data)
+        refY, refZ = (sum(y_data) / len(y_data)), (sum(z_data) / len(z_data))
         return refY, refZ
 
     def sub_request_and_realtime_process(self, minY, maxY, minZ, maxZ, refY, refZ):
@@ -338,7 +340,8 @@ class Cortex():
 
         self.ws.send(json.dumps(sub_request_json))
         
-        eeg_cash = DataCashQueue(DATA_LENGTH)
+        eeg_cache = DataCashQueue(DATA_LENGTH)
+        eeg_command_cache = DataCashQueue(COMMAND_CASH_LENGTH)
 
         skip_counter = 0
         while True:
@@ -347,10 +350,13 @@ class Cortex():
 
             # EEGによるコマンド生成
             if 'eeg' in new_data:
-                eeg_cash.update(new_data['eeg'][2:16])
+                eeg_cache.update(new_data['eeg'][2:16])
                 skip_counter += 1
-                if eeg_cash.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
-                    eeg_command = eeg_commands[np.argmax(model.predict(eeg_cash.reshape()))]
+                if eeg_cache.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
+                    eeg_command = eeg_commands[np.argmax(model.predict(eeg_cache.reshape()))]
+                    eeg_command_cache.update(eeg_command)
+
+                    # TODO: 事前情報(eeg_command_cache)も加味してコマンドを出力する
                     f = open(eeg_file_path, mode='w')
                     f.write(eeg_command)
                     f.close()
@@ -363,6 +369,7 @@ class Cortex():
                 angle = math.degrees(math.atan2(z, y))\
                         - math.degrees(math.atan2(refZ , refY))
                 
+                # 角度を-180~180の範囲に変換
                 angle = angle % 360
                 angle = angle if angle <= 180 else angle - 360
 
@@ -373,6 +380,7 @@ class Cortex():
                     mov_command = 'RIGHT'
                 else:
                     mov_command = 'LEFT'
+
                 f = open(mov_file_path, mode='w')
                 f.write(mov_command)
                 f.close()

@@ -40,7 +40,7 @@ s = input()
 
 refY, refZ = subscribe.get_reference_direction_vector(minY, maxY, minZ, maxZ)
 
-# コマンド生成プログラム
+# コマンド生成
 print('コマンド生成を実行します。')
 print('準備ができたらEnterキーを押してください。')
 s = input()
