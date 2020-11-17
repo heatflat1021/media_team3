@@ -1,9 +1,13 @@
+from typing import List
 import websocket #'pip install websocket-client' for install
 from datetime import datetime
 import json
 import ssl
 import time
 import sys
+import math
+import numpy as np
+import tensorflow as tf
 
 # define request id
 QUERY_HEADSET_ID                    =   1
@@ -25,7 +29,16 @@ MENTAL_COMMAND_ACTIVE_ACTION_ID     =   16
 MENTAL_COMMAND_BRAIN_MAP_ID         =   17
 MENTAL_COMMAND_TRAINING_THRESHOLD   =   18
 
-WINDOW_SIZE = 640
+DATA_LENGTH = 640
+MOTION_SENSING_FREQUENCY = 64
+REFERENCE_SENSING_SECONDS = 8
+THRESHOLD_ANGLE = 20
+EEG_COMMAND_GENERATION_SKIP_RATE = 8
+COMMAND_CASH_LENGTH = 4
+
+mov_file_path = './../mov.txt'
+eeg_file_path = './../eeg.txt'
+eeg_commands = ['NEUTRAL', 'STRAIGHT', 'SWORD', 'MAGIC1', 'MAGIC2']
 
 class DataCashQueue():
     def __init__(self, queue_length):
@@ -35,10 +48,18 @@ class DataCashQueue():
     def __str__(self):
         return str(self.queue)
 
+    def isFulfilled(self):
+        return (len(self.queue) == self.queue_length)
+
     def update(self, new_data):
-        if len(self.queue) == self.queue_length:
+        if self.isFulfilled():
             del self.queue[0]
         self.queue.append(new_data)
+    
+    def reshape(self):
+        X = np.array(self.queue)
+        X = X.reshape(1, X.shape[0], X.shape[1], 1)
+        return X
 
 class Cortex():
     def __init__(self, user, debug_mode=False):
@@ -230,43 +251,138 @@ class Cortex():
             if 'warning' in result_dic:
                 if result_dic['warning']['code'] == 1:
                     break
+    
+    def get_magnetic_field_range(self):
+        SENSING_SECONDS = 10
 
-
-    def sub_request_and_realtime_process(self):
-        streams = ['eeg', 'mot']
-
-        print('subscribe request --------------------------------')
         sub_request_json = {
             "jsonrpc": "2.0", 
             "method": "subscribe", 
             "params": { 
                 "cortexToken": self.auth,
                 "session": self.session_id,
-                "streams": streams
+                "streams": ['mot']
+            }, 
+            "id": SUB_REQUEST_ID
+        }
+
+        self.ws.send(json.dumps(sub_request_json))
+
+        minY = minZ = sys.float_info.max
+        maxY = maxZ = -sys.float_info.max
+        for i in range(SENSING_SECONDS * MOTION_SENSING_FREQUENCY):
+            new_data = self.ws.recv()
+            new_data = json.loads(new_data)
+            print(new_data)
+            if 'mot' in new_data:
+                y, z = new_data['mot'][10], new_data['mot'][11]
+
+                if y < minY:
+                    minY = y
+                if y > maxY:
+                    maxY = y
+                if z < minZ:
+                    minZ = z
+                if z > maxZ:
+                    maxZ = z
+        
+        return minY, maxY, minZ, maxZ
+    
+    # -1~1の間に値を正規化する
+    def normalize_to_plus_minus_one(self, val, min, max):
+        return (val - min) / (max - min) * 2 - 1
+
+    def get_reference_direction_vector(self, minY, maxY, minZ, maxZ):
+        SENSING_SECONDS = 10
+
+        sub_request_json = {
+            "jsonrpc": "2.0", 
+            "method": "subscribe", 
+            "params": { 
+                "cortexToken": self.auth,
+                "session": self.session_id,
+                "streams": ['mot']
+            }, 
+            "id": SUB_REQUEST_ID
+        }
+
+        self.ws.send(json.dumps(sub_request_json))
+
+        y_data = [0]*SENSING_SECONDS * MOTION_SENSING_FREQUENCY
+        z_data = [0]*SENSING_SECONDS * MOTION_SENSING_FREQUENCY
+        for i in range(SENSING_SECONDS * MOTION_SENSING_FREQUENCY):
+            new_data = self.ws.recv()
+            new_data = json.loads(new_data)
+            print(new_data)
+            if 'mot' in new_data:
+                y, z = new_data['mot'][10], new_data['mot'][11]
+            
+                y_data[i] = self.normalize_to_plus_minus_one(y, minY, maxY)
+                z_data[i] = self.normalize_to_plus_minus_one(z, minZ, maxZ)
+        
+        refY, refZ = (sum(y_data) / len(y_data)), (sum(z_data) / len(z_data))
+        return refY, refZ
+
+    def sub_request_and_realtime_process(self, minY, maxY, minZ, maxZ, refY, refZ):
+        model = tf.keras.models.load_model('./../model.h5', compile=True)
+
+        sub_request_json = {
+            "jsonrpc": "2.0", 
+            "method": "subscribe", 
+            "params": { 
+                "cortexToken": self.auth,
+                "session": self.session_id,
+                "streams": ['eeg', 'mot']
             }, 
             "id": SUB_REQUEST_ID
         }
 
         self.ws.send(json.dumps(sub_request_json))
         
-        if 'sys' in streams:
+        eeg_cache = DataCashQueue(DATA_LENGTH)
+        eeg_command_cache = DataCashQueue(COMMAND_CASH_LENGTH)
+
+        skip_counter = 0
+        while True:
             new_data = self.ws.recv()
-            print(json.dumps(new_data, indent=4))
-            print('\n')
-        else:
-            eeg_cash = DataCashQueue(WINDOW_SIZE)
-            while True:
-                new_data = self.ws.recv()
-                new_data = json.loads(new_data)
-                if 'eeg' in new_data:
-                    eeg_cash.update(new_data['eeg'][2:16])
-                    if len(eeg_cash.queue) != WINDOW_SIZE:
-                        continue
-                    print("update EEG command")
-                if 'mot' in new_data:
-                    print(new_data['mot'][9:12])
-                    print("update motion command")
-                print("\n\n")
+            new_data = json.loads(new_data)
+
+            # EEGによるコマンド生成
+            if 'eeg' in new_data:
+                eeg_cache.update(new_data['eeg'][2:16])
+                skip_counter += 1
+                if eeg_cache.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
+                    eeg_command = eeg_commands[np.argmax(model.predict(eeg_cache.reshape()))]
+                    eeg_command_cache.update(eeg_command)
+
+                    # TODO: 事前情報(eeg_command_cache)も加味してコマンドを出力する
+                    f = open(eeg_file_path, mode='w')
+                    f.write(eeg_command)
+                    f.close()
+
+            # モーションによるコマンド生成
+            if 'mot' in new_data:
+                y = self.normalize_to_plus_minus_one(new_data['mot'][10], minY, maxY)
+                z = self.normalize_to_plus_minus_one(new_data['mot'][11], minZ, maxZ)
+            
+                angle = math.degrees(math.atan2(z, y))\
+                        - math.degrees(math.atan2(refZ , refY))
+                
+                # 角度を-180~180の範囲に変換
+                angle = angle % 360
+                angle = angle if angle <= 180 else angle - 360
+
+                mov_command = ""
+                if abs(angle) < THRESHOLD_ANGLE:
+                    mov_command = 'STRAIGHT'
+                elif 0 < angle:
+                    mov_command = 'RIGHT'
+                else:
+                    mov_command = 'LEFT'
+
+                f = open(mov_file_path, mode='w')
+                f.write(mov_command)
+                f.close()
 
     def sub_request(self, stream):
         print('subscribe request --------------------------------')

@@ -29,18 +29,18 @@ class Command:
         self.mesurement_times = mesurement_times
 
 commands = [
-    Command('neutral', '平常心をイメージしてください。', 30),
-    Command('straight', '直進をイメージしてください。', 30),
-    Command('sword', '剣で攻撃するイメージをしてください。', 30),
-    Command('magic1', '火炎を放出するイメージをしてください。', 30),
-    Command('magic2', '岩を動かすイメージをしてください。', 30)
+    Command('neutral', '平常心をイメージしてください。', 3),
+    Command('straight', '直進をイメージしてください。', 3),
+    Command('sword', '剣で攻撃するイメージをしてください。', 3),
+    Command('magic1', '火炎を放出するイメージをしてください。', 3),
+    Command('magic2', '岩を動かすイメージをしてください。', 3)
 ]
 
 user = EmotivInfo.user
 
 r = record.Record(user)
 
-MESUREMENT_SECOND = 16
+MESUREMENT_SECOND = 6
 
 ###############################################
 
@@ -110,6 +110,12 @@ r.c.export_record(record_export_folder,
 	record_export_version,
     record_id_list)
 
+# 不要なJSONファイルの削除
+data_files = os.listdir(record_export_folder)
+json_files = [s for s in data_files if '.json' in s]
+for json_file in json_files:
+    os.remove(json_file)
+
 print("計測お疲れ様でした。")
 print("ただいま脳波データから分類器を生成しています。")
 print("終了を知らせる表示が出るまで、今しばらくお待ちください。")
@@ -117,7 +123,7 @@ print("終了を知らせる表示が出るまで、今しばらくお待ちく�
 ###################################################
 
 DATA_LENGTH = 640
-STEP_SIZE = 10
+STEP_SIZE = 100
 IGNORE_LENGTH = 100
 CHANNEL_NUMBER = 14
 

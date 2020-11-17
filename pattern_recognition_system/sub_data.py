@@ -10,9 +10,16 @@ class Subcribe():
 	def sub(self, streams):
 		self.c.sub_request(streams)
 	
-	def realtime_process(self):
-		
-		self.c.sub_request_and_realtime_process()
+	def get_magnetic_field_range(self):
+		minY, maxY, minZ, maxZ = self.c.get_magnetic_field_range()
+		return minY, maxY, minZ, maxZ
+	
+	def get_reference_direction_vector(self, minY, maxY, minZ, maxZ):
+		refY, refZ = self.c.get_reference_direction_vector(minY, maxY, minZ, maxZ)
+		return refY, refZ
+	
+	def realtime_process(self, minY, maxY, minZ, maxZ, refY, refZ):
+		self.c.sub_request_and_realtime_process(minY, maxY, minZ, maxZ, refY, refZ)
 
 
 # -----------------------------------------------------------
