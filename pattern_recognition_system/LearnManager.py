@@ -1,6 +1,3 @@
-import record
-import EmotivInfo
-
 import time
 import re
 import os
@@ -9,6 +6,9 @@ import csv
 import numpy as np
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
+
+import record
+import EmotivInfo
 
 def ready_confirm():
     print('準備ができたらEnterキーを押してください。')

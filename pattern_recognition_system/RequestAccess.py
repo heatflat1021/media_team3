@@ -1,6 +1,6 @@
-import EmotivInfo
-
 from cortex import Cortex
+
+import EmotivInfo
 
 class RequestAccess():
 	def __init__(self, user):

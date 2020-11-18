@@ -1,9 +1,9 @@
-import EmotivInfo
-import sub_data
-
 import csv
 import os
 import shutil
+
+import EmotivInfo
+import sub_data
 
 while True:
     print('以前に作成したユーザー名を入力してください')
