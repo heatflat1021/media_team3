@@ -6,6 +6,8 @@ import ssl
 import time
 import sys
 import math
+from collections import Counter
+
 import numpy as np
 import tensorflow as tf
 
@@ -34,7 +36,7 @@ MOTION_SENSING_FREQUENCY = 64
 REFERENCE_SENSING_SECONDS = 8
 THRESHOLD_ANGLE = 20
 EEG_COMMAND_GENERATION_SKIP_RATE = 8
-COMMAND_CASH_LENGTH = 4
+COMMAND_CASH_LENGTH = 10
 
 mov_file_path = './../mov.txt'
 eeg_file_path = './../eeg.txt'
@@ -60,6 +62,10 @@ class DataCashQueue():
         X = np.array(self.queue)
         X = X.reshape(1, X.shape[0], X.shape[1], 1)
         return X
+    
+    def getMostCommon(self):
+        counter = Counter(self.queue)
+        return counter.most_common()[0][0]
 
 class Cortex():
     def __init__(self, user, debug_mode=False):
@@ -355,9 +361,9 @@ class Cortex():
                     eeg_command = eeg_commands[np.argmax(model.predict(eeg_cache.reshape()))]
                     eeg_command_cache.update(eeg_command)
 
-                    # TODO: 事前情報(eeg_command_cache)も加味してコマンドを出力する
+                    most_common = eeg_command_cache.getMostCommon()
                     f = open(eeg_file_path, mode='w')
-                    f.write(eeg_command)
+                    f.write(most_common)
                     f.close()
 
             # モーションによるコマンド生成

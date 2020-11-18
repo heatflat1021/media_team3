@@ -1,7 +1,8 @@
-import EmotivInfo
+import time
 
 from cortex import Cortex
-import time
+
+import EmotivInfo
 
 class Record():
 	def __init__(self, user):
