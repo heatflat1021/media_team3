@@ -7,9 +7,11 @@ public class BoarManager : MonoBehaviour
 {
     public Transform target;
     NavMeshAgent agent;
+    Animator animator;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.destination = target.position;
     }
@@ -17,5 +19,6 @@ public class BoarManager : MonoBehaviour
     void Update()
     {
         agent.destination = target.position;
+        animator.SetFloat("Distance", agent.remainingDistance);
     }
 }
