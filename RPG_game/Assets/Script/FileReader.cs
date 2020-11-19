@@ -25,27 +25,45 @@ public class FileReader : MonoBehaviour
 
     void ReadFile()
     {
-        // a.txtファイルを読み込む
-        FileInfo fi = new FileInfo("./a.txt");
+        guitxt = "";
+
+        // eeg.txtファイルを読み込む
+        FileInfo eeg = new FileInfo("./eeg.txt");
         try
         {
             // 一行毎読み込み
-            using (StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.UTF8))
+            using (StreamReader sr = new StreamReader(eeg.OpenRead(), Encoding.UTF8))
             {
-                guitxt = sr.ReadToEnd();
+                guitxt += sr.ReadToEnd();
             }
         }
         catch (Exception e)
         {
-            // 改行コード
-            guitxt = SetDefaultText();
+            guitxt += SetDefaultText();
+        }
+
+        guitxt += "\n";
+
+        // mot.txtファイルを読み込む
+        FileInfo mot = new FileInfo("./mot.txt");
+        try
+        {
+            // 一行毎読み込み
+            using (StreamReader sr = new StreamReader(eeg.OpenRead(), Encoding.UTF8))
+            {
+                guitxt += sr.ReadToEnd();
+            }
+        }
+        catch (Exception e)
+        {
+            guitxt += SetDefaultText();
         }
     }
 
     // 改行コード処理
     string SetDefaultText()
     {
-        return "No Input";
+        return "NoInput";
     }
 
 }
