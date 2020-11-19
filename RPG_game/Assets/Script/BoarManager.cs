@@ -11,7 +11,7 @@ public class BoarManager : MonoBehaviour
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.destination = target.position;
     }
