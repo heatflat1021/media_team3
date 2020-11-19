@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
     float rotation;
 
     Rigidbody rb;
-    
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -22,7 +22,7 @@ public class PlayerManager : MonoBehaviour
         straight = Input.GetAxisRaw("Vertical");
         rotation = Input.GetAxisRaw("Horizontal");
     }
-    
+
     private void FixedUpdate()
     {
         rb.velocity = rb.transform.forward * straight * straightSpeed;
