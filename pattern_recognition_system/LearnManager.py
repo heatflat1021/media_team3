@@ -181,7 +181,7 @@ model.add(tf.keras.layers.Conv2D(100, kernel_size=(11,1),activation='relu'))#時
 model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
 #5
 model.add(tf.keras.layers.Conv2D(200, kernel_size=(11,1),activation='relu'))#時間軸1次畳み込み
-model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
+model.add(tf.keras.layers.AveragePooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
 #
 model.add(tf.keras.layers.Flatten())#
 model.add(tf.keras.layers.Dense(len(commands), activation='softmax'))#出力 サイズ4ベクトル
@@ -192,12 +192,14 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 
 # モデル学習
+earlystopper = tf.keras.callbacks.EarlyStopping(min_delta=0.01,patience=5)
 history = model.fit(X_train,
                     Y_train,
                     batch_size= 16,
-                    epochs=30,
+                    epochs=60,
                     verbose=1,
-                    validation_data=(X_valid,Y_valid))
+                    validation_data=(X_valid,Y_valid),
+                    callbacks=[earlystopper])
 model.save('./{}/model.h5'.format(username))
 
 #####################################################
