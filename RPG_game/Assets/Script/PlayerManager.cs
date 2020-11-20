@@ -22,8 +22,16 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        //移動入力
         straight = Input.GetAxisRaw("Vertical");
         rotation = Input.GetAxisRaw("Horizontal");
+
+        //攻撃入力
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("攻撃");
+            animator.SetTrigger("Attack");
+        }
     }
 
     private void FixedUpdate()
