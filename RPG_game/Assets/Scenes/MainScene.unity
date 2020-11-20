@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fdafc3b32363154782f5d7af36a7a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 3069589445397576314}
+  target: {fileID: 308622483}
 --- !u!1001 &15876768
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1054,17 +1054,17 @@ PrefabInstance:
     - target: {fileID: 5930651934574693639, guid: 7bf201eb93a64ab47857ce81b796a258,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5930651934574693639, guid: 7bf201eb93a64ab47857ce81b796a258,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5930651934574693639, guid: 7bf201eb93a64ab47857ce81b796a258,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bf201eb93a64ab47857ce81b796a258, type: 3}
@@ -3248,6 +3248,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!4 &308622483 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5930651934574693639, guid: 7bf201eb93a64ab47857ce81b796a258,
+    type: 3}
+  m_PrefabInstance: {fileID: 77350610}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &308669193 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 445910, guid: c63ea781a273235439e583799176c846,
@@ -11380,7 +11386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1105e7776befe394eb4f96045b93ed49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 3069589445397341722}
+  player: {fileID: 308622478}
   cam: {fileID: 1125402709}
 --- !u!4 &1031046612
 Transform:
