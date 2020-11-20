@@ -11,10 +11,13 @@ public class PlayerManager : MonoBehaviour
     float rotation;
 
     Rigidbody rb;
+    Animator animator;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -27,5 +30,6 @@ public class PlayerManager : MonoBehaviour
     {
         rb.velocity = rb.transform.forward * straight * straightSpeed;
         rb.angularVelocity = new Vector3(0, rotation, 0) * rotationSpeed;
+        animator.SetFloat("Speed", rb.velocity.magnitude);
     }
 }
