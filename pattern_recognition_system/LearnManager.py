@@ -29,18 +29,18 @@ class Command:
         self.mesurement_times = mesurement_times
 
 commands = [
-    Command('neutral', '平常心をイメージしてください。', 3),
-    Command('straight', '直進をイメージしてください。', 3),
-    Command('sword', '剣で攻撃するイメージをしてください。', 3),
-    Command('magic1', '火炎を放出するイメージをしてください。', 3),
-    Command('magic2', '岩を動かすイメージをしてください。', 3)
+    Command('neutral', '平常心をイメージしてください。', 4),
+    Command('straight', '直進をイメージしてください。', 4),
+    Command('sword', '剣で攻撃するイメージをしてください。', 4),
+    Command('magic1', '火炎を放出するイメージをしてください。', 4),
+    Command('magic2', '岩を動かすイメージをしてください。', 4)
 ]
 
 user = EmotivInfo.user
 
 r = record.Record(user)
 
-MESUREMENT_SECOND = 6
+MESUREMENT_SECOND = 20
 
 ###############################################
 
@@ -123,8 +123,8 @@ print("終了を知らせる表示が出るまで、今しばらくお待ちく�
 ###################################################
 
 DATA_LENGTH = 640
-STEP_SIZE = 100
-IGNORE_LENGTH = 100
+STEP_SIZE = 24
+IGNORE_LENGTH = 80
 CHANNEL_NUMBER = 14
 
 path = "./{}".format(username)
@@ -197,7 +197,7 @@ history = model.fit(X_train,
                     Y_train,
                     batch_size= 16,
                     epochs=60,
-                    verbose=1,
+                    verbose=0,
                     validation_data=(X_valid,Y_valid),
                     callbacks=[earlystopper])
 model.save('./{}/model.h5'.format(username))
