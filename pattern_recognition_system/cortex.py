@@ -362,9 +362,14 @@ class Cortex():
                     eeg_command_cache.update(eeg_command)
 
                     most_common = eeg_command_cache.getMostCommon()
-                    f = open(eeg_file_path, mode='w')
-                    f.write(most_common)
-                    f.close()
+
+                    try:
+                        f = open(eeg_file_path, mode='w')
+                        f.write(most_common)
+                    except PermissionError as e:
+                        print("PermissionErrorが発生")
+                    finally:
+                        f.close()
 
             # モーションによるコマンド生成
             if 'mot' in new_data:
@@ -386,9 +391,13 @@ class Cortex():
                 else:
                     mov_command = 'LEFT'
 
-                f = open(mov_file_path, mode='w')
-                f.write(mov_command)
-                f.close()
+                try:
+                    f = open(mov_file_path, mode='w')
+                    f.write(mov_command)
+                except PermissionError as e:
+                    print("PermissionErrorが発生")
+                finally:
+                    f.close()
 
     def sub_request(self, stream):
         print('subscribe request --------------------------------')
