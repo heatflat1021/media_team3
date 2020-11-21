@@ -35,7 +35,7 @@ DATA_LENGTH = 640
 MOTION_SENSING_FREQUENCY = 32
 REFERENCE_SENSING_SECONDS = 8
 THRESHOLD_ANGLE = 20
-EEG_COMMAND_GENERATION_SKIP_RATE = 8
+EEG_COMMAND_GENERATION_SKIP_RATE = 16
 COMMAND_CASH_LENGTH = 10
 
 mot_file_path = './../mot.txt'
@@ -354,22 +354,22 @@ class Cortex():
             new_data = json.loads(new_data)
 
             # EEGによるコマンド生成
-            # if 'eeg' in new_data:
-            #     eeg_cache.update(new_data['eeg'][2:16])
-            #     skip_counter += 1
-            #     if eeg_cache.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
-            #         eeg_command = eeg_commands[np.argmax(model.predict(eeg_cache.reshape()))]
-            #         eeg_command_cache.update(eeg_command)
+            if 'eeg' in new_data:
+                eeg_cache.update(new_data['eeg'][2:16])
+                skip_counter += 1
+                if eeg_cache.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
+                    eeg_command = eeg_commands[np.argmax(model.predict(eeg_cache.reshape()))]
+                    eeg_command_cache.update(eeg_command)
 
-            #         most_common = eeg_command_cache.getMostCommon()
+                    most_common = eeg_command_cache.getMostCommon()
 
-            #         try:
-            #             f = open(eeg_file_path, mode='w')
-            #             f.write(most_common)
-            #         except PermissionError as e:
-            #             print("PermissionErrorが発生")
-            #         finally:
-            #             f.close()
+                    try:
+                        f = open(eeg_file_path, mode='w')
+                        f.write(most_common)
+                    except PermissionError as e:
+                        print("PermissionErrorが発生")
+                    finally:
+                        f.close()
 
             # モーションによるコマンド生成
             if 'mot' in new_data:
