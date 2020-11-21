@@ -114,7 +114,7 @@ r.c.export_record(record_export_folder,
 data_files = os.listdir(record_export_folder)
 json_files = [s for s in data_files if '.json' in s]
 for json_file in json_files:
-    os.remove(json_file)
+    os.remove('./{}/{}'.format(username, json_file))
 
 print("計測お疲れ様でした。")
 print("ただいま脳波データから分類器を生成しています。")
