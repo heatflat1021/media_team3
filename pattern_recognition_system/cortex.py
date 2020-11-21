@@ -38,7 +38,7 @@ THRESHOLD_ANGLE = 20
 EEG_COMMAND_GENERATION_SKIP_RATE = 8
 COMMAND_CASH_LENGTH = 10
 
-mov_file_path = './../mov.txt'
+mot_file_path = './../mot.txt'
 eeg_file_path = './../eeg.txt'
 eeg_commands = ['NEUTRAL', 'STRAIGHT', 'SWORD', 'MAGIC1', 'MAGIC2']
 
@@ -354,22 +354,22 @@ class Cortex():
             new_data = json.loads(new_data)
 
             # EEGによるコマンド生成
-            if 'eeg' in new_data:
-                eeg_cache.update(new_data['eeg'][2:16])
-                skip_counter += 1
-                if eeg_cache.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
-                    eeg_command = eeg_commands[np.argmax(model.predict(eeg_cache.reshape()))]
-                    eeg_command_cache.update(eeg_command)
+            # if 'eeg' in new_data:
+            #     eeg_cache.update(new_data['eeg'][2:16])
+            #     skip_counter += 1
+            #     if eeg_cache.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
+            #         eeg_command = eeg_commands[np.argmax(model.predict(eeg_cache.reshape()))]
+            #         eeg_command_cache.update(eeg_command)
 
-                    most_common = eeg_command_cache.getMostCommon()
+            #         most_common = eeg_command_cache.getMostCommon()
 
-                    try:
-                        f = open(eeg_file_path, mode='w')
-                        f.write(most_common)
-                    except PermissionError as e:
-                        print("PermissionErrorが発生")
-                    finally:
-                        f.close()
+            #         try:
+            #             f = open(eeg_file_path, mode='w')
+            #             f.write(most_common)
+            #         except PermissionError as e:
+            #             print("PermissionErrorが発生")
+            #         finally:
+            #             f.close()
 
             # モーションによるコマンド生成
             if 'mot' in new_data:
@@ -383,17 +383,18 @@ class Cortex():
                 angle = angle % 360
                 angle = angle if angle <= 180 else angle - 360
 
-                mov_command = ""
+                mot_command = ""
                 if abs(angle) < THRESHOLD_ANGLE:
-                    mov_command = 'STRAIGHT'
+                    mot_command = 'STRAIGHT'
                 elif 0 < angle:
-                    mov_command = 'RIGHT'
+                    mot_command = 'RIGHT'
                 else:
-                    mov_command = 'LEFT'
+                    mot_command = 'LEFT'
 
+                print("[MOT] {}".format(mot_command))
                 try:
-                    f = open(mov_file_path, mode='w')
-                    f.write(mov_command)
+                    f = open(mot_file_path, mode='w')
+                    f.write(mot_command)
                 except PermissionError as e:
                     print("PermissionErrorが発生")
                 finally:
