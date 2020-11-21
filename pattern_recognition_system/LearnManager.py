@@ -29,18 +29,18 @@ class Command:
         self.mesurement_times = mesurement_times
 
 commands = [
-    Command('neutral', '平常心をイメージしてください。', 3),
-    Command('straight', '直進をイメージしてください。', 3),
-    Command('sword', '剣で攻撃するイメージをしてください。', 3),
-    Command('magic1', '火炎を放出するイメージをしてください。', 3),
-    Command('magic2', '岩を動かすイメージをしてください。', 3)
+    Command('neutral', '平常心をイメージしてください。', 4),
+    Command('straight', '直進をイメージしてください。', 4),
+    Command('sword', '剣で攻撃するイメージをしてください。', 4),
+    Command('magic1', '火炎を放出するイメージをしてください。', 4),
+    Command('magic2', '岩を動かすイメージをしてください。', 4)
 ]
 
 user = EmotivInfo.user
 
 r = record.Record(user)
 
-MESUREMENT_SECOND = 6
+MESUREMENT_SECOND = 20
 
 ###############################################
 
@@ -114,7 +114,7 @@ r.c.export_record(record_export_folder,
 data_files = os.listdir(record_export_folder)
 json_files = [s for s in data_files if '.json' in s]
 for json_file in json_files:
-    os.remove(json_file)
+    os.remove('./{}/{}'.format(username, json_file))
 
 print("計測お疲れ様でした。")
 print("ただいま脳波データから分類器を生成しています。")
@@ -123,8 +123,8 @@ print("終了を知らせる表示が出るまで、今しばらくお待ちく�
 ###################################################
 
 DATA_LENGTH = 640
-STEP_SIZE = 100
-IGNORE_LENGTH = 100
+STEP_SIZE = 24
+IGNORE_LENGTH = 80
 CHANNEL_NUMBER = 14
 
 path = "./{}".format(username)
@@ -181,7 +181,7 @@ model.add(tf.keras.layers.Conv2D(100, kernel_size=(11,1),activation='relu'))#時
 model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
 #5
 model.add(tf.keras.layers.Conv2D(200, kernel_size=(11,1),activation='relu'))#時間軸1次畳み込み
-model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
+model.add(tf.keras.layers.AveragePooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
 #
 model.add(tf.keras.layers.Flatten())#
 model.add(tf.keras.layers.Dense(len(commands), activation='softmax'))#出力 サイズ4ベクトル
@@ -192,12 +192,14 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 
 # モデル学習
+earlystopper = tf.keras.callbacks.EarlyStopping(min_delta=0.01,patience=5)
 history = model.fit(X_train,
                     Y_train,
                     batch_size= 16,
-                    epochs=30,
-                    verbose=1,
-                    validation_data=(X_valid,Y_valid))
+                    epochs=60,
+                    verbose=0,
+                    validation_data=(X_valid,Y_valid),
+                    callbacks=[earlystopper])
 model.save('./{}/model.h5'.format(username))
 
 #####################################################

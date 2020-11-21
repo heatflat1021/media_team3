@@ -10,9 +10,9 @@
 1. Emotiv PROをインストールする。([EmotivのHP](https://www.emotiv.com/))
 1. EmotivInfo.samの内容をコピーして、同じディレクトリにEmotivInfo.pyを作成する。
 1. EmotivInfo.pyの内容を適切に書き換える。
-1. Emotiv EPOC+を接続する。
+1. Emotiv EPOC+をPCに接続する。
 1. `python RequestAccess.py`でRequestAccess.pyを実行する。
-1. Emotiv PROを実行し、認証を行う。
+1. Emotiv PROを実行し、承認を行う。
 1. `python LearnManager.py`で脳波の計測及び、パターン認識モデルの生成を行う。
 1. `python ClassifyManager.py`でパターン認識のプログラムを実行する。
 

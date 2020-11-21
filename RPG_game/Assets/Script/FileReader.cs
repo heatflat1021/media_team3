@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class FileReader : MonoBehaviour
 {
-    public string guitxt = "";
+    public string text = "";
 
     // Start is called before the first frame update
     void Start()
@@ -20,12 +20,12 @@ public class FileReader : MonoBehaviour
     void Update()
     {
         ReadFile();
-        this.GetComponentInChildren<Canvas>().GetComponentInChildren<Text>().text = guitxt;
+        this.GetComponentInChildren<Canvas>().GetComponentInChildren<Text>().text = text;
     }
 
     void ReadFile()
     {
-        guitxt = "";
+        text = "";
 
         // eeg.txtファイルを読み込む
         FileInfo eeg = new FileInfo("./eeg.txt");
@@ -34,29 +34,29 @@ public class FileReader : MonoBehaviour
             // 一行毎読み込み
             using (StreamReader sr = new StreamReader(eeg.OpenRead(), Encoding.UTF8))
             {
-                guitxt += sr.ReadToEnd();
+                text += sr.ReadToEnd();
             }
         }
         catch (Exception e)
         {
-            guitxt += SetDefaultText();
+            text += SetDefaultText();
         }
 
-        guitxt += "\n";
+        text += "\n";
 
         // mot.txtファイルを読み込む
         FileInfo mot = new FileInfo("./mot.txt");
         try
         {
             // 一行毎読み込み
-            using (StreamReader sr = new StreamReader(eeg.OpenRead(), Encoding.UTF8))
+            using (StreamReader sr = new StreamReader(mot.OpenRead(), Encoding.UTF8))
             {
-                guitxt += sr.ReadToEnd();
+                text += sr.ReadToEnd();
             }
         }
         catch (Exception e)
         {
-            guitxt += SetDefaultText();
+            text += SetDefaultText();
         }
     }
 
