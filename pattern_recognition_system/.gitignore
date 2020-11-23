@@ -1,2 +1,13 @@
 EmotivInfo.py
 __pycache__/
+
+magic1*.json
+magic1*.csv
+magic2*.json
+magic2*.csv
+neutral*.json
+neutral*.csv
+straight*.json
+straight*.csv
+sword*.json
+sword*.csv
