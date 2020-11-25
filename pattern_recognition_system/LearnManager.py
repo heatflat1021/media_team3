@@ -137,26 +137,22 @@ def normalize(x):
 
 all_files = os.listdir(path)
 
-X = np.zeros((0, DATA_LENGTH, CHANNEL_NUMBER), float)
-Y = np.zeros(0)
-for command in commands:
+X = np.zeros((0, DATA_LENGTH, CHANNEL_NUMBER), dtype='float32')
+Y = []
+for commandIdx, command in enumerate(commands):
     specific_command_data_list = np.zeros((0, DATA_LENGTH, CHANNEL_NUMBER), float)
     specific_files = [s for s in all_files if command.name in s and '.csv' in s]
-    for commandIdx, specific_file in enumerate(specific_files):
-        with open(path + "/" + specific_file) as f:
-            reader = csv.reader(f)
-            l = [row for row in reader]
-        l = [[float(v) for v in row[3:3+CHANNEL_NUMBER]] for row in l[2:]] # EEGに該当する部分のみスライス
-        l = np.array(l)
-        l = l.astype(np.float)
+    for specific_file in specific_files:
+        l = np.loadtxt('{}/{}'.format(path, specific_file), delimiter=',', dtype='float32', skiprows=2, usecols=range(3, 3+CHANNEL_NUMBER))
         
         step = 0
         while IGNORE_LENGTH + STEP_SIZE * step + DATA_LENGTH < l.shape[0]:
             startIdx = IGNORE_LENGTH + STEP_SIZE * step
-            endIdx = IGNORE_LENGTH + STEP_SIZE * step + DATA_LENGTH
+            endIdx = startIdx + DATA_LENGTH
             X = np.block([[[X]], [[normalize(l[startIdx:endIdx]).reshape(1, DATA_LENGTH, CHANNEL_NUMBER)]]])
             step += 1
-        Y = np.append(Y, np.full(step, commandIdx))
+        Y.append([commandIdx]*step)
+Y = np.asarray(Y)
 
 #reshape
 X = X.reshape(X.shape[0], X.shape[1],X.shape[2], 1)
