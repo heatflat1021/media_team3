@@ -139,10 +139,10 @@ all_files = os.listdir(path)
 
 X = np.zeros((0, DATA_LENGTH, CHANNEL_NUMBER), dtype='float32')
 Y = []
-for command in commands:
+for commandIdx, command in enumerate(commands):
     specific_command_data_list = np.zeros((0, DATA_LENGTH, CHANNEL_NUMBER), float)
     specific_files = [s for s in all_files if command.name in s and '.csv' in s]
-    for commandIdx, specific_file in enumerate(specific_files):
+    for specific_file in specific_files:
         l = np.loadtxt('{}/{}'.format(path, specific_file), delimiter=',', dtype='float32', skiprows=2, usecols=range(3, 3+CHANNEL_NUMBER))
         
         step = 0
