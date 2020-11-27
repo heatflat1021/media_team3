@@ -100,6 +100,10 @@ public class PlayerManager : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ぶつかった(Player)");
+        Damager damager = other.GetComponent<Damager>();
+        if (damager != null)
+        {
+            Debug.Log("Playerはダメージを受ける");
+        }
     }
 }

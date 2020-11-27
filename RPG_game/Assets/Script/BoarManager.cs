@@ -24,6 +24,10 @@ public class BoarManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ぶつかった(敵)");
+        Damager damager = other.GetComponent<Damager>();
+        if(damager != null)
+        {
+            Debug.Log("敵はダメージを受ける");
+        }
     }
 }
