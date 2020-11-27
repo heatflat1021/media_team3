@@ -13,6 +13,11 @@ public class PlayerManager : MonoBehaviour
     float straight;
     float rotation;
 
+    public PlayerUIManager playerUIManager;
+
+    int maxHp = 100;
+    int hp;
+
     Rigidbody rb;
     Animator animator;
 
@@ -23,6 +28,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
+        hp = maxHp;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         input = "";
@@ -96,5 +102,37 @@ public class PlayerManager : MonoBehaviour
     string SetDefaultText()
     {
         return "NoInput";
+    }
+
+    //武器の判定を有効にしたり消したりする関数
+    public void HideColliderWeapon()
+    {
+
+    }
+    public void ShowColliderWeapon()
+    {
+
+    }
+
+
+    void Damage(int damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            hp = 0;
+        }
+        playerUIManager.UpdateHP(hp);
+        Debug.Log("Arthur HP:" + hp);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Damager damager = other.GetComponent<Damager>();
+        if (damager != null)
+        {
+            Debug.Log("Playerはダメージを受ける");
+            Damage(damager.damage);
+        }
     }
 }
