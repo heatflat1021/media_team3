@@ -13,6 +13,8 @@ public class PlayerManager : MonoBehaviour
     float straight;
     float rotation;
 
+    public PlayerUIManager playerUIManager;
+
     int maxHp = 100;
     int hp;
 
@@ -120,6 +122,7 @@ public class PlayerManager : MonoBehaviour
         {
             hp = 0;
         }
+        playerUIManager.UpdateHP(hp);
         Debug.Log("Arthur HP:" + hp);
     }
 

@@ -101,6 +101,7 @@
      <Compile Include="Assets\Script\Damager.cs" />
      <Compile Include="Assets\Script\FileReader.cs" />
      <Compile Include="Assets\Script\PlayerManager.cs" />
+     <Compile Include="Assets\Script\PlayerUIManager.cs" />
      <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
      <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
      <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\VortexEffect.shader" />
