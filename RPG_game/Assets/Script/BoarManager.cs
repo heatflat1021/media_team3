@@ -21,4 +21,9 @@ public class BoarManager : MonoBehaviour
         agent.destination = target.position;
         animator.SetFloat("Distance", agent.remainingDistance);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("ぶつかった(敵)");
+    }
 }

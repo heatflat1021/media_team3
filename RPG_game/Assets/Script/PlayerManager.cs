@@ -97,4 +97,9 @@ public class PlayerManager : MonoBehaviour
     {
         return "NoInput";
     }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("ぶつかった(Player)");
+    }
 }
