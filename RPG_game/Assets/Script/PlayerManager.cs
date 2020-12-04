@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
 
     string input;
 
-    bool debugMode = true;
+    bool debugMode = false;
 
 
     void Start()
@@ -69,6 +69,34 @@ public class PlayerManager : MonoBehaviour
             }
 
             // TODO:  EEGデータから操作
+            Debug.Log(input);
+            if(input == "STRAIGHT")
+            {
+                straight = 1;
+                straightSpeed = 24.0f;
+            }
+            else if(input == "NEUTRAL")
+            {
+                straight = 0;
+                straightSpeed = 0;
+            }
+            else if(input == "SWORD")
+            {
+                Debug.Log("攻撃");
+                animator.SetTrigger("Attack");
+            }
+            /*
+            else if(input == "MAGIC1")
+            {
+                Debug.Log("MAGIC1");
+                animator.SetTrigger("MAGIC1");
+            }
+            else if(input == "MAGIC2")
+            {
+                Debug.Log("MAGIC2");
+                animator.SetTrigger("MAGIC2");
+            }
+            */
 
             input = "";
 
@@ -88,6 +116,21 @@ public class PlayerManager : MonoBehaviour
             }
 
             // TODO: モーションデータから操作
+            if(input == "STRAIGHT")
+            {
+                rotation = 0;
+                rotationSpeed = 0;
+            }
+            else if(input == "RIGHT")
+            {
+                rotation = 1;
+                rotationSpeed = 2.0f;
+            }
+            else if(input == "LEFT")
+            {
+                rotation = -1;
+                rotationSpeed = 2.0f;
+            }
         }
 
     }
