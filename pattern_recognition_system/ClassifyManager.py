@@ -19,10 +19,7 @@ while True:
 
     break
 
-f = open('./{}/modelNum.txt'.format(username),'r')
-mNum = f.read()
-
-shutil.copy('./{}/model{}.h5'.format(username, mNum), './../')
+shutil.copy('./{}/model.h5'.format(username), './../')
 
 user = EmotivInfo.user
 subscribe = sub_data.Subcribe(user)

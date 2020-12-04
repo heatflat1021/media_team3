@@ -19,6 +19,9 @@ STEP_SIZE = 640
 IGNORE_LENGTH = 80
 CHANNEL_NUMBER = 14
 
+LAYER_DEPTHS = [4, 5]
+FILTER_MAGNIFICATIONS = [1, 2, 3]
+
 path = "./{}".format(username)
 
 def normalize(x):
@@ -54,56 +57,55 @@ Y = tf.keras.utils.to_categorical(Y, num_classes=len(commands))
 # 学習：検証 ＝ 7：3 で分割
 X_train, X_valid, Y_train, Y_valid = train_test_split(X, Y, test_size=0.3)
 
-learn_times=3
-los = np.zeros(5)
-acc = np.zeros(5)
+max_score = -1 # 最小値で初期化
+optimal_model = None
 
-for i in range(learn_times):
-    #5層CNN for EEG
-    model = tf.keras.models.Sequential()
-    #1 入力(640,14,1)
-    model.add(tf.keras.layers.Conv2D(25, kernel_size=(11,1),activation='relu', input_shape=(640,14,1)))#時間軸１次畳み込み
-    #2
-    model.add(tf.keras.layers.Conv2D(25, kernel_size=(1,14),activation='relu'))#空間軸1次畳み込み14->1
-    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
-    #3
-    model.add(tf.keras.layers.Conv2D(50, kernel_size=(11,1),activation='relu'))#時間軸1次畳み込み
-    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
-    #4
-    model.add(tf.keras.layers.Conv2D(100, kernel_size=(11,1),activation='relu'))#時間軸1次畳み込み
-    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
-    #5
-    model.add(tf.keras.layers.Conv2D(200, kernel_size=(11,1),activation='relu'))#時間軸1次畳み込み
-    model.add(tf.keras.layers.AveragePooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
-    #
-    model.add(tf.keras.layers.Flatten())#
-    model.add(tf.keras.layers.Dense(len(commands), activation='softmax'))#出力 サイズ4ベクトル
+for layer_depth in LAYER_DEPTHS:
+    for filter_magnification in FILTER_MAGNIFICATIONS:
+        #5層CNN for EEG
+        model = tf.keras.models.Sequential()
+        #1 入力(640,14,1)
+        model.add(tf.keras.layers.Conv2D(25*filter_magnification, kernel_size=(11,1),activation='relu', input_shape=(640,14,1)))#時間軸１次畳み込み
+        #2
+        model.add(tf.keras.layers.Conv2D(25*filter_magnification , kernel_size=(1,14),activation='relu'))#空間軸1次畳み込み14->1
+        model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
+        #3
+        model.add(tf.keras.layers.Conv2D(50*filter_magnification, kernel_size=(11,1),activation='relu'))#時間軸1次畳み込み
+        model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
+        #4
+        model.add(tf.keras.layers.Conv2D(100*filter_magnification, kernel_size=(11,1),activation='relu'))#時間軸1次畳み込み
+        model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
+        #5
+        if 5 <= layer_depth:
+            model.add(tf.keras.layers.Conv2D(200*filter_magnification, kernel_size=(11,1),activation='relu'))#時間軸1次畳み込み
+            model.add(tf.keras.layers.AveragePooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
+        #
+        model.add(tf.keras.layers.Flatten())#
+        model.add(tf.keras.layers.Dense(len(commands), activation='softmax'))#出力 サイズ4ベクトル
 
-    # モデル構築
-    model.compile(loss='categorical_crossentropy',
-                optimizer='adam',
-                metrics=['accuracy'])
+        # モデル構築
+        model.compile(loss='categorical_crossentropy',
+                    optimizer='adam',
+                    metrics=['accuracy'])
 
-    # モデル学習
-    earlystopper = tf.keras.callbacks.EarlyStopping(min_delta=0.01,patience=5)
-    history = model.fit(X_train,
-                        Y_train,
-                        batch_size= 16,
-                        epochs=60,
-                        verbose=0,
-                        validation_data=(X_valid,Y_valid),
-                        callbacks=[earlystopper])
+        # モデル学習
+        earlystopper = tf.keras.callbacks.EarlyStopping(min_delta=0.01,patience=5)
+        history = model.fit(X_train,
+                            Y_train,
+                            batch_size= 16,
+                            epochs=60,
+                            verbose=0,
+                            validation_data=(X_valid,Y_valid),
+                            callbacks=[earlystopper])
 
-    model.save('./{}/model{}.h5'.format(username,i))
-    ####評価
-    los[i],acc[i] = model.evaluate(X_test, Y_test)
+        ####評価
+        loss, acc = model.evaluate(X_test, Y_test)
 
-modelNum = np.argmax(acc)
-print('model{}.h5を使います。'.format(modelNum))
-#modelNum.txtにモデル番号を書いて渡す
-f = open('./{}/modelNum.txt'.format(username),'w')
-f.write('{}'.format(modelNum))
-f.close()
+        if acc - 0.5 * loss > max_score:
+            max_score = acc - 0.5 * loss
+            optimal_model = model
+
+optimal_model.save('./{}/model.h5'.format(username))
 
 #####################################################
 
