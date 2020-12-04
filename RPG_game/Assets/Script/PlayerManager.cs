@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
 
     string input;
 
-    bool debugMode = false;
+    bool debugMode = true;
 
 
     void Start()

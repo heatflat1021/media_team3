@@ -24,8 +24,9 @@ public class BoarManager : MonoBehaviour
     {
         agent.destination = target.position;
         animator.SetFloat("Distance", agent.remainingDistance);
+        
     }
-
+    
     void Damage(int damage)
     {
         hp -= damage;
@@ -33,9 +34,16 @@ public class BoarManager : MonoBehaviour
         {
             hp = 0;
         }
-        Debug.Log("Boar HP:" + hp);
+        if(hp > 0)
+        {
+            Debug.Log("Boar HP:" + hp);
+        }
+        else if (hp == 0)
+        {
+            Debug.Log("Boarは死んだ");
+        }
     }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         Damager damager = other.GetComponent<Damager>();
