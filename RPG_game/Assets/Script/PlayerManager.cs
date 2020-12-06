@@ -85,12 +85,12 @@ public class PlayerManager : MonoBehaviour
                 Debug.Log("攻撃");
                 animator.SetTrigger("Attack");
             }
-            /*
             else if(input == "MAGIC1")
             {
                 Debug.Log("MAGIC1");
-                animator.SetTrigger("MAGIC1");
+                animator.SetTrigger("Fire");
             }
+            /*
             else if(input == "MAGIC2")
             {
                 Debug.Log("MAGIC2");

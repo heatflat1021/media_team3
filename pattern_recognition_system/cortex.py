@@ -68,7 +68,7 @@ class DataCashQueue():
         return counter.most_common()[0][0]
 
 class Cortex():
-    def __init__(self, user, debug_mode=False):
+    def __init__(self, user, debug_mode=True):
         url = "wss://localhost:6868"
         self.ws = websocket.create_connection(url,
                                             sslopt={"cert_reqs": ssl.CERT_NONE})

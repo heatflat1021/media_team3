@@ -30,7 +30,7 @@ class Command:
 
 class Record():
 	def __init__(self, user):
-		self.c = Cortex(user, debug_mode=False)
+		self.c = Cortex(user, debug_mode=True)
 		self.c.do_prepare_steps()
 
 	def create_record_then_export(self,
