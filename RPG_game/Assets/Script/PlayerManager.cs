@@ -20,6 +20,10 @@ public class PlayerManager : MonoBehaviour
 
     Rigidbody rb;
     Animator animator;
+    public GameObject fire;
+
+    bool fireFlag = false;
+    int fireCounter = 0;
 
     string input;
 
@@ -31,6 +35,7 @@ public class PlayerManager : MonoBehaviour
         hp = maxHp;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        fire.SetActive(false); 
         input = "";
     }
 
@@ -45,8 +50,17 @@ public class PlayerManager : MonoBehaviour
             //攻撃入力
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("攻撃");
-                animator.SetTrigger("Attack");
+                // Debug.Log("攻撃");
+                // animator.SetTrigger("Attack");
+
+                // 炎コマンドの起動
+                if (!fireFlag)
+                {
+                    Debug.Log("炎");
+                    animator.SetTrigger("Fire");
+                    fireFlag = true;
+                }
+
             }
         }
         else // 本番時
@@ -87,8 +101,13 @@ public class PlayerManager : MonoBehaviour
             }
             else if(input == "MAGIC1")
             {
-                Debug.Log("MAGIC1");
-                animator.SetTrigger("Fire");
+                // 炎コマンドの起動
+                if (!fireFlag)
+                {
+                    Debug.Log("炎");
+                    animator.SetTrigger("Fire");
+                    fireFlag = true;
+                }
             }
             /*
             else if(input == "MAGIC2")
@@ -133,6 +152,21 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
+        // 炎コマンドの更新
+        if (fireFlag)
+        {
+            fireCounter++;
+            if(fireCounter == 70)
+            {
+                fire.SetActive(true);
+            }
+            if(fireCounter > 240)
+            {
+                fire.SetActive(false);
+                fireCounter = 0;
+                fireFlag = false;
+            }
+        }
     }
 
     private void FixedUpdate()
