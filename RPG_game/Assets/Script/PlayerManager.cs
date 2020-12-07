@@ -20,10 +20,15 @@ public class PlayerManager : MonoBehaviour
 
     Rigidbody rb;
     Animator animator;
-    public GameObject fire;
 
+    // 炎関連
+    public GameObject fire;
     bool fireFlag = false;
     int fireCounter = 0;
+
+    // 岩関連
+    public GameObject rock1;
+    public GameObject rock2;
 
     string input;
 
@@ -54,13 +59,16 @@ public class PlayerManager : MonoBehaviour
                 // animator.SetTrigger("Attack");
 
                 // 炎コマンドの起動
-                if (!fireFlag)
-                {
-                    Debug.Log("炎");
-                    animator.SetTrigger("Fire");
-                    fireFlag = true;
-                }
+                // if (!fireFlag)
+                // {
+                //     Debug.Log("炎");
+                //     animator.SetTrigger("Fire");
+                //     fireFlag = true;
+                // }
 
+                // 岩のサイコキネシス
+                rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
+                rock2.transform.Translate(0, -0.2f + UnityEngine.Random.value, 0);
             }
         }
         else // 本番時

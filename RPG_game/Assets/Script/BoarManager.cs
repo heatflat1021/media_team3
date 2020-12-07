@@ -12,6 +12,10 @@ public class BoarManager : MonoBehaviour
     int maxHp = 100;
     int hp;
 
+    public GameObject cursor;
+    public GameObject cursor_red;
+    bool is_red = false;
+
     void Start()
     {
         hp = maxHp;
@@ -25,6 +29,18 @@ public class BoarManager : MonoBehaviour
         agent.destination = target.position;
         animator.SetFloat("Distance", agent.remainingDistance);
         
+        if(!is_red && agent.remainingDistance < 65.0f) // カーソルを緑から赤へ
+        {
+            cursor.SetActive(false);
+            cursor_red.SetActive(true);
+            is_red = true;
+        }
+        else if(is_red && agent.remainingDistance > 65.0f) // カーソルを赤から緑へ
+        {
+            cursor.SetActive(true);
+            cursor_red.SetActive(false);
+            is_red = false;
+        }
     }
     
     void Damage(int damage)
