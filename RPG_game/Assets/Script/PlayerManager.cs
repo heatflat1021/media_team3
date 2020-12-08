@@ -29,6 +29,7 @@ public class PlayerManager : MonoBehaviour
     // 岩関連
     public GameObject rock1;
     public GameObject rock2;
+    bool rockFlag = false;
 
     string input;
 
@@ -74,6 +75,7 @@ public class PlayerManager : MonoBehaviour
         else // 本番時
         {
             input = "";
+            rockFlag = false;
 
             // eeg.txtファイルを読み込む
             FileInfo eeg = new FileInfo("./eeg.txt");
@@ -117,13 +119,14 @@ public class PlayerManager : MonoBehaviour
                     fireFlag = true;
                 }
             }
-            /*
             else if(input == "MAGIC2")
             {
                 Debug.Log("MAGIC2");
-                animator.SetTrigger("MAGIC2");
+                // 岩のサイコキネシス
+                rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
+                rock2.transform.Translate(0, -0.2f + UnityEngine.Random.value, 0);
+                rockFlag = true;
             }
-            */
 
             input = "";
 
@@ -173,6 +176,19 @@ public class PlayerManager : MonoBehaviour
                 fire.SetActive(false);
                 fireCounter = 0;
                 fireFlag = false;
+            }
+        }
+
+        // 岩の重力落下
+        if (!rockFlag)
+        {
+            if (rock1.transform.position.y > 4.3)
+            {
+                rock1.transform.Translate(0, 0.01f, 0);
+            }
+            if (rock2.transform.position.y > 6.1)
+            {
+                rock2.transform.Translate(0, -0.03f, 0);
             }
         }
     }
