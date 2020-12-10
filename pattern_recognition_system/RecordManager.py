@@ -1,6 +1,8 @@
 import time
 import re
 import os
+import winsound
+import platform
 
 from cortex import Cortex
 import EmotivInfo
@@ -19,6 +21,12 @@ def count_down(second):
 
 def isascii(s):
     return re.compile(r"^[!-~]+$").match(s) is not None
+
+def beep(freq=2000, dur=200):
+    if platform.system() == "Windows":
+        winsound.Beep(freq, dur)
+    else:
+        os.system('play -n synth %s sin %s' % (dur/1000, freq))
 
 class Command:
     def __init__(self, name, instruction, mesurement_times):
@@ -132,6 +140,7 @@ for idx, command in enumerate(commands):
         record_id_list.append(r.c.record_id)
 
         print("完了[{}/{}]:{}".format((i + 1), command.mesurement_times, command.name))
+        beep()
 
 # export parameters
 record_export_folder = os.path.join(current_dir, username)
@@ -151,6 +160,6 @@ r.c.export_record(record_export_folder,
 data_files = os.listdir(record_export_folder)
 json_files = [s for s in data_files if ".json" in s]
 for json_file in json_files:
-    os.remove('./{}/{}'.format(username, json_file))
+    os.remove("./{}/{}".format(username, json_file))
 
 print("計測お疲れ様でした。")
