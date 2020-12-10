@@ -21,6 +21,16 @@ public class PlayerManager : MonoBehaviour
     Rigidbody rb;
     Animator animator;
 
+    // 炎関連
+    public GameObject fire;
+    bool fireFlag = false;
+    int fireCounter = 0;
+
+    // 岩関連
+    public GameObject rock1;
+    public GameObject rock2;
+    bool rockFlag = false;
+
     string input;
 
     bool debugMode = true;
@@ -31,6 +41,7 @@ public class PlayerManager : MonoBehaviour
         hp = maxHp;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        fire.SetActive(false); 
         input = "";
     }
 
@@ -45,13 +56,26 @@ public class PlayerManager : MonoBehaviour
             //攻撃入力
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("攻撃");
-                animator.SetTrigger("Attack");
+                // Debug.Log("攻撃");
+                // animator.SetTrigger("Attack");
+
+                // 炎コマンドの起動
+                // if (!fireFlag)
+                // {
+                //     Debug.Log("炎");
+                //     animator.SetTrigger("Fire");
+                //     fireFlag = true;
+                // }
+
+                // 岩のサイコキネシス
+                rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
+                rock2.transform.Translate(0, -0.2f + UnityEngine.Random.value, 0);
             }
         }
         else // 本番時
         {
             input = "";
+            rockFlag = false;
 
             // eeg.txtファイルを読み込む
             FileInfo eeg = new FileInfo("./eeg.txt");
@@ -85,18 +109,24 @@ public class PlayerManager : MonoBehaviour
                 Debug.Log("攻撃");
                 animator.SetTrigger("Attack");
             }
-            /*
             else if(input == "MAGIC1")
             {
-                Debug.Log("MAGIC1");
-                animator.SetTrigger("MAGIC1");
+                // 炎コマンドの起動
+                if (!fireFlag)
+                {
+                    Debug.Log("炎");
+                    animator.SetTrigger("Fire");
+                    fireFlag = true;
+                }
             }
             else if(input == "MAGIC2")
             {
                 Debug.Log("MAGIC2");
-                animator.SetTrigger("MAGIC2");
+                // 岩のサイコキネシス
+                rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
+                rock2.transform.Translate(0, -0.2f + UnityEngine.Random.value, 0);
+                rockFlag = true;
             }
-            */
 
             input = "";
 
@@ -133,6 +163,34 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
+        // 炎コマンドの更新
+        if (fireFlag)
+        {
+            fireCounter++;
+            if(fireCounter == 70)
+            {
+                fire.SetActive(true);
+            }
+            if(fireCounter > 240)
+            {
+                fire.SetActive(false);
+                fireCounter = 0;
+                fireFlag = false;
+            }
+        }
+
+        // 岩の重力落下
+        if (!rockFlag)
+        {
+            if (rock1.transform.position.y > 4.3)
+            {
+                rock1.transform.Translate(0, 0.01f, 0);
+            }
+            if (rock2.transform.position.y > 6.1)
+            {
+                rock2.transform.Translate(0, -0.03f, 0);
+            }
+        }
     }
 
     private void FixedUpdate()
