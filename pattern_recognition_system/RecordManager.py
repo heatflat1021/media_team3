@@ -1,11 +1,6 @@
 import time
 import re
 import os
-import csv
-
-import numpy as np
-from sklearn.model_selection import train_test_split
-import tensorflow as tf
 
 from cortex import Cortex
 import EmotivInfo
@@ -30,7 +25,7 @@ class Command:
 
 class Record():
 	def __init__(self, user):
-		self.c = Cortex(user, debug_mode=True)
+		self.c = Cortex(user, debug_mode=False)
 		self.c.do_prepare_steps()
 
 	def create_record_then_export(self,
@@ -68,11 +63,11 @@ class Record():
 		print('end recording -------------------------')
 
 commands = [
-    Command('neutral', '平常心をイメージしてください。', 4),
-    Command('straight', '直進をイメージしてください。', 4),
-    Command('sword', '剣で攻撃するイメージをしてください。', 4),
-    Command('magic1', '火炎を放出するイメージをしてください。', 4),
-    Command('magic2', '岩を動かすイメージをしてください。', 4)
+    Command('neutral', '平常心をイメージしてください。', 10),
+    Command('straight', '直進をイメージしてください。', 10),
+    Command('sword', '剣で攻撃するイメージをしてください。', 10),
+    Command('magic1', '火炎を放出するイメージをしてください。', 10),
+    Command('magic2', '岩を動かすイメージをしてください。', 10)
 ]
 
 user = EmotivInfo.user
@@ -109,6 +104,33 @@ while True:
     if not username in dir_list:
         os.mkdir(os.path.join(current_dir, username))
     break
+
+print('計測秒数や計測回数を指定しますか？指定する場合はMを、指定しない場合はそれ以外を入力してください。')
+print('入力:', end='')
+s = input()
+if(s in 'mM'):
+    recordTime = recordNum = 0
+    while True:
+        print("計測秒数:", end='')
+        n = input()
+        try:
+            recordTime = int(n)
+        except:
+            continue
+        break
+
+    while True:
+        print("計測回数:", end='')
+        n = input()
+        try:
+            recordNum = int(n)
+        except:
+            continue
+        break
+
+    MESUREMENT_SECOND = recordTime
+    for command in commands:
+        command.mesurement_times = recordNum
 
 print("計測を開始します。")
 ready_confirm()
@@ -156,5 +178,3 @@ for json_file in json_files:
     os.remove('./{}/{}'.format(username, json_file))
 
 print("計測お疲れ様でした。")
-print("ただいま脳波データから分類器を生成しています。")
-print("終了を知らせる表示が出るまで、今しばらくお待ちください。")
