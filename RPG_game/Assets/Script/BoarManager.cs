@@ -17,6 +17,7 @@ public class BoarManager : MonoBehaviour
     public GameObject cursor;
     public GameObject cursor_red;
     bool is_red = false;
+    int cursor_change_counter = 0;
 
     void Start()
     {
@@ -31,20 +32,25 @@ public class BoarManager : MonoBehaviour
     void Update()
     {
         agent.destination = target.position;
-        animator.SetFloat("Distance", agent.remainingDistance);
+        float calcuratedDistance = Mathf.Sqrt(Mathf.Pow(target.position.x - agent.transform.position.x, 2) + (Mathf.Pow(target.position.z - agent.transform.position.z, 2)));
+        animator.SetFloat("Distance", calcuratedDistance);
         
-        if(!is_red && agent.remainingDistance < 65.0f) // カーソルを緑から赤へ
+        if(!is_red && calcuratedDistance < 65.0f && cursor_change_counter > 20) // カーソルを緑から赤へ
         {
             cursor.SetActive(false);
             cursor_red.SetActive(true);
             is_red = true;
+            cursor_change_counter = 0;
+            agent.velocity = new Vector3(0, 0, 0);
         }
-        else if(is_red && agent.remainingDistance > 65.0f) // カーソルを赤から緑へ
+        else if(is_red && calcuratedDistance > 63.0f && cursor_change_counter > 20) // カーソルを赤から緑へ
         {
             cursor.SetActive(true);
             cursor_red.SetActive(false);
             is_red = false;
+            cursor_change_counter = 0;
         }
+        cursor_change_counter++;
     }
     
     void Damage(int damage)
