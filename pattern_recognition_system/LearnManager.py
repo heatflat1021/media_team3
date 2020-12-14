@@ -10,7 +10,7 @@ TRAIN_VALID_PROPORTION = 0.8
 TRAIN_PROPORTION = 0.8
 
 DATA_LENGTH = 640
-STEP_SIZE = 640
+STEP_SIZE = 40
 IGNORE_LENGTH = 80
 CHANNEL_NUMBER = 14
 
@@ -156,15 +156,15 @@ for layer_depth in LAYER_DEPTHS:
         model.add(tf.keras.layers.Conv2D(25*filter_magnification , kernel_size=(1,14),activation="relu"))#空間軸1次畳み込み14->1
         model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
         #3
-        model.add(tf.keras.layers.Conv2D(50*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
-        model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
+        if 5 <= layer_depth:
+            model.add(tf.keras.layers.Conv2D(50*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
+            model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
         #4
         model.add(tf.keras.layers.Conv2D(100*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
         model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
         #5
-        if 5 <= layer_depth:
-            model.add(tf.keras.layers.Conv2D(200*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
-            model.add(tf.keras.layers.AveragePooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
+        model.add(tf.keras.layers.Conv2D(200*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
+        model.add(tf.keras.layers.AveragePooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
         #
         model.add(tf.keras.layers.Flatten())#
         model.add(tf.keras.layers.Dense(len(commands), activation="softmax"))#出力 サイズ4ベクトル
