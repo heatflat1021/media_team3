@@ -18589,6 +18589,7 @@ GameObject:
   - component: {fileID: 1394569475}
   - component: {fileID: 1394569474}
   - component: {fileID: 1394569473}
+  - component: {fileID: 1394569478}
   m_Layer: 5
   m_Name: EnemyUICanvas
   m_TagString: Untagged
@@ -18689,6 +18690,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 8.6}
   m_SizeDelta: {x: 5, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1394569478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394569472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011e0d2c950ad5c41a477e517d9a2fc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1395920989 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd,
