@@ -99,7 +99,7 @@
      <Compile Include="Assets\Script\BoarManager.cs" />
      <Compile Include="Assets\Script\CameraController.cs" />
      <Compile Include="Assets\Script\Damager.cs" />
-     <Compile Include="Assets\Script\EnemyUImanager.cs" />
+     <Compile Include="Assets\Script\EnemyUIManager.cs" />
      <Compile Include="Assets\Script\FileReader.cs" />
      <Compile Include="Assets\Script\PlayerManager.cs" />
      <Compile Include="Assets\Script\PlayerUIManager.cs" />

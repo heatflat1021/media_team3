@@ -7,6 +7,12 @@ public class EnemyUIManager : MonoBehaviour
 {
 
     public Slider hpSlider;
+    
+    public void Init(BoarManager boarManager)
+    {
+        hpSlider.maxValue = boarManager.maxHp;
+        hpSlider.value = boarManager.maxHp;
+    }
 
     public void UpdateHP(int hp)
     {

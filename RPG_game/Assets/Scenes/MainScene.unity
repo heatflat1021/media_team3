@@ -195,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 308622483}
   enemyUIManager: {fileID: 1394569473}
+  maxHp: 100
   cursor: {fileID: 8733011877221338082}
   cursor_red: {fileID: 412091338}
 --- !u!136 &12736577
@@ -5041,6 +5042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerUIManager: {fileID: 1665642015}
+  maxHp: 100
   fire: {fileID: 1475317771}
   rock1: {fileID: 1789720238}
   rock2: {fileID: 806797063}
@@ -9810,7 +9812,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 50
+  m_Value: 15.6
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

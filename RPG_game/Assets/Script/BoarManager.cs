@@ -11,7 +11,7 @@ public class BoarManager : MonoBehaviour
 
     public EnemyUIManager enemyUIManager;
 
-    int maxHp = 100;
+    public int maxHp = 100;
     int hp;
 
     public GameObject cursor;
@@ -21,6 +21,8 @@ public class BoarManager : MonoBehaviour
     void Start()
     {
         hp = maxHp;
+        enemyUIManager.Init(this);
+
         animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.destination = target.position;

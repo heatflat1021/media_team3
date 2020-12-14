@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerUIManager playerUIManager;
 
-    int maxHp = 100;
+    public int maxHp = 100;
     int hp;
 
     Rigidbody rb;
