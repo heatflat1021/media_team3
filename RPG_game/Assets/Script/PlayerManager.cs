@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerUIManager playerUIManager;
 
-    int maxHp = 100;
+    public int maxHp = 100;
     int hp;
 
     Rigidbody rb;
@@ -39,6 +39,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         hp = maxHp;
+        playerUIManager.Init(this);
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         fire.SetActive(false); 
