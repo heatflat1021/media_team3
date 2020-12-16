@@ -61,12 +61,12 @@ public class PlayerManager : MonoBehaviour
                 // animator.SetTrigger("Attack");
 
                 // 炎コマンドの起動
-                // if (!fireFlag)
-                // {
-                //     Debug.Log("炎");
-                //     animator.SetTrigger("Fire");
-                //     fireFlag = true;
-                // }
+                if (!fireFlag)
+                {
+                    Debug.Log("炎");
+                    animator.SetTrigger("Fire");
+                    fireFlag = true;
+                }
 
                 // 岩のサイコキネシス
                 rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);

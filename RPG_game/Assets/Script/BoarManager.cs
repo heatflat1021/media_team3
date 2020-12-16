@@ -19,6 +19,9 @@ public class BoarManager : MonoBehaviour
     bool is_red = false;
     int cursor_change_counter = 0;
 
+    public GameObject vanishmentParticle;
+    public GameObject vanishmentParticle2;
+
     void Start()
     {
         hp = maxHp;
@@ -68,6 +71,8 @@ public class BoarManager : MonoBehaviour
         else if (hp == 0)
         {
             Debug.Log("Boarは死んだ");
+            Instantiate(vanishmentParticle, this.transform.position, Quaternion.identity);
+            Instantiate(vanishmentParticle2, this.transform.position, Quaternion.identity);
         }
     }
     
