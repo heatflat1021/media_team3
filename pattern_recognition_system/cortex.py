@@ -59,7 +59,7 @@ class DataCashQueue():
         self.queue.append(new_data)
     
     def reshape(self):
-        X = np.array(self.queue)
+        X = np.array(self.queue, dtype="float32")
         min = X.min()
         max = X.max()
         X = (X-min)/(max-min)
@@ -365,6 +365,7 @@ class Cortex():
             # EEGによるコマンド生成
             if 'eeg' in new_data:
                 eeg_cache.update(new_data['eeg'][2:16])
+                print(new_data['eeg'][2:16])
                 skip_counter += 1
                 if eeg_cache.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
                     eeg_command = eeg_commands[np.argmax(model.predict(eeg_cache.reshape()))]
@@ -372,6 +373,7 @@ class Cortex():
 
                     most_common = eeg_command_cache.getMostCommon()
 
+                    print(eeg_command)
                     print("[EEG] {}".format(most_common))
                     try:
                         f = open(eeg_file_path, mode='w')

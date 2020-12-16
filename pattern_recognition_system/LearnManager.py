@@ -10,13 +10,13 @@ TRAIN_VALID_PROPORTION = 0.8
 TRAIN_PROPORTION = 0.8
 
 DATA_LENGTH = 640
-STEP_SIZE = 40
+STEP_SIZE = 60
 IGNORE_LENGTH = 80
 CHANNEL_NUMBER = 14
 
 LAYER_DEPTHS = [4, 5]
-FILTER_MAGNIFICATIONS = [1, 2, 3]
-LOSS_COEFFICIENT = 0.5
+FILTER_MAGNIFICATIONS = [1, 2, 3, 4, 5, 6, 7, 8]
+LOSS_COEFFICIENT = 0.1
 
 commands = ["neutral", "straight", "sword", "magic1", "magic2"]
 
@@ -144,52 +144,53 @@ print(Y_train.shape)
 print(Y_valid.shape)
 print(Y_test.shape)
 
-max_score = -1 # 最小値で初期化
+max_score = -1000
 optimal_model = None
 for layer_depth in LAYER_DEPTHS:
     for filter_magnification in FILTER_MAGNIFICATIONS:
-        #5層CNN for EEG
-        model = tf.keras.models.Sequential()
-        #1 入力(640,14,1)
-        model.add(tf.keras.layers.Conv2D(25*filter_magnification, kernel_size=(11,1),activation="relu", input_shape=(640,14,1)))#時間軸１次畳み込み
-        #2
-        model.add(tf.keras.layers.Conv2D(25*filter_magnification , kernel_size=(1,14),activation="relu"))#空間軸1次畳み込み14->1
-        model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
-        #3
-        if 5 <= layer_depth:
-            model.add(tf.keras.layers.Conv2D(50*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
+        for i in range(3):
+            #5層CNN for EEG
+            model = tf.keras.models.Sequential()
+            #1 入力(640,14,1)
+            model.add(tf.keras.layers.Conv2D(4*filter_magnification, kernel_size=(11,1),activation="relu", input_shape=(640,14,1)))#時間軸１次畳み込み
+            #2
+            model.add(tf.keras.layers.Conv2D(4*filter_magnification , kernel_size=(1,14),activation="relu"))#空間軸1次畳み込み14->1
             model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
-        #4
-        model.add(tf.keras.layers.Conv2D(100*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
-        model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
-        #5
-        model.add(tf.keras.layers.Conv2D(200*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
-        model.add(tf.keras.layers.AveragePooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
-        #
-        model.add(tf.keras.layers.Flatten())#
-        model.add(tf.keras.layers.Dense(len(commands), activation="softmax"))#出力 サイズ4ベクトル
+            #3
+            if 5 <= layer_depth:
+                model.add(tf.keras.layers.Conv2D(8*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
+                model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
+            #4
+            model.add(tf.keras.layers.Conv2D(16*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
+            model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,1)))#3x1pooling
+            #5
+            model.add(tf.keras.layers.Conv2D(32*filter_magnification, kernel_size=(11,1),activation="relu"))#時間軸1次畳み込み
+            model.add(tf.keras.layers.AveragePooling2D(pool_size=(2,1),strides=(2,1)))#2x1pooling  2strides
+            #
+            model.add(tf.keras.layers.Flatten())#
+            model.add(tf.keras.layers.Dense(len(commands), activation="softmax"))#出力 サイズ4ベクトル
 
-        # モデル構築
-        model.compile(loss="categorical_crossentropy",
-                    optimizer="adam",
-                    metrics=["accuracy"])
+            # モデル構築
+            model.compile(loss="categorical_crossentropy",
+                        optimizer="adam",
+                        metrics=["accuracy"])
 
-        # モデル学習
-        earlystopper = tf.keras.callbacks.EarlyStopping(min_delta=0.01,patience=5)
-        history = model.fit(X_train,
-                            Y_train,
-                            batch_size= 16,
-                            epochs=60,
-                            verbose=0,
-                            validation_data=(X_valid,Y_valid),
-                            callbacks=[earlystopper])
+            # モデル学習
+            earlystopper = tf.keras.callbacks.EarlyStopping(min_delta=0.008,patience=5)
+            history = model.fit(X_train,
+                                Y_train,
+                                batch_size= 16,
+                                epochs=60,
+                                verbose=0,
+                                validation_data=(X_valid,Y_valid),
+                                callbacks=[earlystopper])
 
-        # 評価
-        loss, acc = model.evaluate(X_test, Y_test)
+            # 評価
+            loss, acc = model.evaluate(X_test, Y_test)
 
-        if acc - LOSS_COEFFICIENT * loss > max_score:
-            max_score = acc - LOSS_COEFFICIENT * loss
-            optimal_model = model
+            if acc - LOSS_COEFFICIENT * loss > max_score:
+                max_score = acc - LOSS_COEFFICIENT * loss
+                optimal_model = model
 
 optimal_model.save("./{}/model.h5".format(username))
 
