@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 12736576}
   - component: {fileID: 12736579}
   - component: {fileID: 12736578}
-  - component: {fileID: 12736577}
   m_Layer: 0
   m_Name: BoarWrapper
   m_TagString: Untagged
@@ -203,20 +202,6 @@ MonoBehaviour:
     type: 3}
   vanishmentParticle2: {fileID: 7292415729545780468, guid: 497719e88aadb7d41908162cdfdde997,
     type: 3}
---- !u!136 &12736577
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12736573}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 5.77
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.9, z: -1.23}
 --- !u!75 &12736578
 ConstantForce:
   m_ObjectHideFlags: 0
@@ -5049,6 +5034,8 @@ MonoBehaviour:
   playerUIManager: {fileID: 1665642015}
   maxHp: 100
   fire: {fileID: 1475317771}
+  fireFlag: 0
+  fireCounter: 0
   rock1: {fileID: 1789720238}
   rock2: {fileID: 806797063}
 --- !u!75 &308622480
@@ -5781,6 +5768,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 198214374999220926, guid: 007c57e2df8e9b144b99f471b84f3d56,
+        type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198214374999220926, guid: 007c57e2df8e9b144b99f471b84f3d56,
+        type: 3}
+      propertyPath: CollisionModule.collisionMessages
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198214374999220926, guid: 007c57e2df8e9b144b99f471b84f3d56,
+        type: 3}
+      propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 198637950067575458, guid: 007c57e2df8e9b144b99f471b84f3d56,
         type: 3}
       propertyPath: looping
@@ -5790,6 +5792,16 @@ PrefabInstance:
         type: 3}
       propertyPath: lengthInSec
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 198637950067575458, guid: 007c57e2df8e9b144b99f471b84f3d56,
+        type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198637950067575458, guid: 007c57e2df8e9b144b99f471b84f3d56,
+        type: 3}
+      propertyPath: CollisionModule.collisionMessages
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
@@ -8486,6 +8498,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c74caa742791864f9c678287121e6c9, type: 3}
+--- !u!1 &606685481 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1685911702664702, guid: 007c57e2df8e9b144b99f471b84f3d56,
+    type: 3}
+  m_PrefabInstance: {fileID: 370215714}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &606685485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606685481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2c5cbf7d0d09349b318a5cdad3b045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &607240216
 GameObject:
   m_ObjectHideFlags: 0

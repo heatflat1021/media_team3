@@ -23,8 +23,8 @@ public class PlayerManager : MonoBehaviour
 
     // 炎関連
     public GameObject fire;
-    bool fireFlag = false;
-    int fireCounter = 0;
+    public bool fireFlag = false;
+    public int fireCounter = 0;
 
     // 岩関連
     public GameObject rock1;

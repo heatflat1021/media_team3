@@ -14,6 +14,8 @@ public class BoarManager : MonoBehaviour
     public int maxHp = 100;
     int hp;
 
+    int fireReceivedCounter = 0;
+
     public GameObject cursor;
     public GameObject cursor_red;
     bool is_red = false;
@@ -54,6 +56,23 @@ public class BoarManager : MonoBehaviour
             cursor_change_counter = 0;
         }
         cursor_change_counter++;
+
+        // 炎の攻撃を受けたときの処理
+        if (target.GetComponent<PlayerManager>().fireFlag)
+        {
+            if(fireReceivedCounter > 400)
+            {
+                Invoke("FireDamage", 0.45f);
+                fireReceivedCounter = 0;
+            }
+            
+        }
+        fireReceivedCounter++;
+    }
+
+    void FireDamage()
+    {
+        Damage(20);
     }
     
     void Damage(int damage)
