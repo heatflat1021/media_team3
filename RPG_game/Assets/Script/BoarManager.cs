@@ -56,6 +56,11 @@ public class BoarManager : MonoBehaviour
             cursor_change_counter = 0;
         }
         cursor_change_counter++;
+        
+        if(calcuratedDistance < 14.0f)
+        {
+            agent.velocity = new Vector3(0, 0, 0);
+        }
 
         // 炎の攻撃を受けたときの処理
         if (target.GetComponent<PlayerManager>().fireFlag)
