@@ -183,7 +183,7 @@ public class PlayerManager : MonoBehaviour
         // 岩の重力落下
         if (!rockFlag)
         {
-            if (rock1.transform.position.y > 4.3)
+            if (rock1.transform.position.y > 4.3 && !rock1.GetComponent<RockManager>().reachedToEnemy)
             {
                 rock1.transform.Translate(0, 0.01f, 0);
             }
