@@ -202,6 +202,8 @@ MonoBehaviour:
     type: 3}
   vanishmentParticle2: {fileID: 7292415729545780468, guid: 497719e88aadb7d41908162cdfdde997,
     type: 3}
+  rock1: {fileID: 1789720238}
+  rock2: {fileID: 806797063}
   vanishingColor: {fileID: 2100000, guid: 962d52c725808c140a31c7927d6a5005, type: 2}
 --- !u!75 &12736578
 ConstantForce:
@@ -11122,6 +11124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 12736575}
   toEnemy: 0
+  reachedToEnemy: 0
 --- !u!4 &808749746 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd,
@@ -22341,6 +22344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 12736575}
   toEnemy: 0
+  reachedToEnemy: 0
 --- !u!1001 &1796162660
 PrefabInstance:
   m_ObjectHideFlags: 0

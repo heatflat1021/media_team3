@@ -15,6 +15,7 @@ public class BoarManager : MonoBehaviour
     int hp;
 
     int fireReceivedCounter = 0;
+    int rockReceivedCounter = 0;
 
     public GameObject cursor;
     public GameObject cursor_red;
@@ -23,6 +24,9 @@ public class BoarManager : MonoBehaviour
 
     public GameObject vanishmentParticle;
     public GameObject vanishmentParticle2;
+
+    public GameObject rock1;
+    public GameObject rock2;
 
     public Material vanishingColor;
 
@@ -75,6 +79,17 @@ public class BoarManager : MonoBehaviour
             
         }
         fireReceivedCounter++;
+
+        // 岩の攻撃を受けたときの処理
+        if(rock1.GetComponent<RockManager>().reachedToEnemy || rock2.GetComponent<RockManager>().reachedToEnemy)
+        {
+            if(rockReceivedCounter > 400)
+            {
+                Damage(100);
+                rockReceivedCounter = 0;
+            }
+        }
+        rockReceivedCounter++;
     }
 
     void FireDamage()
@@ -94,7 +109,7 @@ public class BoarManager : MonoBehaviour
         {
             Debug.Log("Boar HP:" + hp);
         }
-        else if (hp == 0)
+        else if (hp <= 0)
         {
             Debug.Log("Boarは死んだ");
             Renderer[] renderers = GetComponentsInChildren<Renderer>();

@@ -11,6 +11,7 @@ public class RockManager : MonoBehaviour
     Animator animator;
 
     public bool toEnemy;
+    public bool reachedToEnemy;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class RockManager : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         toEnemy = false;
+        reachedToEnemy = false;
         agent.destination = target.position;
         agent.enabled = false;
     }
@@ -40,6 +42,7 @@ public class RockManager : MonoBehaviour
             if (calcuratedDistance < 14.0f)
             {
                 agent.velocity = new Vector3(0, 0, 0);
+                reachedToEnemy = true;
             }
         }
     }
