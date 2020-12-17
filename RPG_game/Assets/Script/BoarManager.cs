@@ -124,7 +124,7 @@ public class BoarManager : MonoBehaviour
                 }
             }
             Instantiate(vanishmentParticle, this.transform.position, Quaternion.identity);
-            Instantiate(vanishmentParticle2, this.transform.position, Quaternion.identity);
+            //Instantiate(vanishmentParticle2, this.transform.position, Quaternion.identity);
         }
     }
     
