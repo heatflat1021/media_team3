@@ -24,6 +24,8 @@ public class BoarManager : MonoBehaviour
     public GameObject vanishmentParticle;
     public GameObject vanishmentParticle2;
 
+    public Material vanishingColor;
+
     void Start()
     {
         hp = maxHp;
@@ -95,6 +97,17 @@ public class BoarManager : MonoBehaviour
         else if (hp == 0)
         {
             Debug.Log("Boarは死んだ");
+            Renderer[] renderers = GetComponentsInChildren<Renderer>();
+            for (int i=0; i<renderers.Length; i++)
+            {
+                Renderer r = renderers[i];
+                Debug.Log(r.ToString());
+                if (r.name.Equals("Body"))
+                {
+                    r.material.color = vanishingColor.color;
+                    Destroy(this.gameObject, 0.5f);
+                }
+            }
             Instantiate(vanishmentParticle, this.transform.position, Quaternion.identity);
             Instantiate(vanishmentParticle2, this.transform.position, Quaternion.identity);
         }

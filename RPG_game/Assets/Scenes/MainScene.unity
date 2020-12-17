@@ -202,6 +202,7 @@ MonoBehaviour:
     type: 3}
   vanishmentParticle2: {fileID: 7292415729545780468, guid: 497719e88aadb7d41908162cdfdde997,
     type: 3}
+  vanishingColor: {fileID: 2100000, guid: 962d52c725808c140a31c7927d6a5005, type: 2}
 --- !u!75 &12736578
 ConstantForce:
   m_ObjectHideFlags: 0
