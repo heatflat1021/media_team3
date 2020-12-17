@@ -124,8 +124,8 @@ public class PlayerManager : MonoBehaviour
             {
                 Debug.Log("MAGIC2");
                 // 岩のサイコキネシス
-                rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
-                rock2.transform.Translate(0, -0.2f + UnityEngine.Random.value, 0);
+                rock1.transform.Translate(0, 3.2f - UnityEngine.Random.value, 0);
+                rock2.transform.Translate(0, -3.2f + UnityEngine.Random.value, 0);
                 rockFlag = true;
             }
 
