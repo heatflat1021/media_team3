@@ -225,7 +225,7 @@ public class PlayerManager : MonoBehaviour
             hp = 0;
         }
         playerUIManager.UpdateHP(hp);
-        Debug.Log("Arthur HP:" + hp);
+        Debug.Log("Arthur HP:" + hp*160);
     }
 
     private void OnTriggerEnter(Collider other)
