@@ -14,9 +14,21 @@ public class BoarManager : MonoBehaviour
     public int maxHp = 100;
     int hp;
 
+    int fireReceivedCounter = 0;
+    int rockReceivedCounter = 0;
+
     public GameObject cursor;
     public GameObject cursor_red;
     bool is_red = false;
+    int cursor_change_counter = 0;
+
+    public GameObject vanishmentParticle;
+    public GameObject vanishmentParticle2;
+
+    public GameObject rock1;
+    public GameObject rock2;
+
+    public Material vanishingColor;
 
     void Start()
     {
@@ -31,20 +43,58 @@ public class BoarManager : MonoBehaviour
     void Update()
     {
         agent.destination = target.position;
-        animator.SetFloat("Distance", agent.remainingDistance);
+        float calcuratedDistance = Mathf.Sqrt(Mathf.Pow(target.position.x - agent.transform.position.x, 2) + (Mathf.Pow(target.position.z - agent.transform.position.z, 2)));
+        animator.SetFloat("Distance", calcuratedDistance);
         
-        if(!is_red && agent.remainingDistance < 65.0f) // カーソルを緑から赤へ
+        if(!is_red && calcuratedDistance < 65.0f && cursor_change_counter > 20) // カーソルを緑から赤へ
         {
             cursor.SetActive(false);
             cursor_red.SetActive(true);
             is_red = true;
+            cursor_change_counter = 0;
+            agent.velocity = new Vector3(0, 0, 0);
         }
-        else if(is_red && agent.remainingDistance > 65.0f) // カーソルを赤から緑へ
+        else if(is_red && calcuratedDistance > 63.0f && cursor_change_counter > 20) // カーソルを赤から緑へ
         {
             cursor.SetActive(true);
             cursor_red.SetActive(false);
             is_red = false;
+            cursor_change_counter = 0;
         }
+        cursor_change_counter++;
+        
+        if(calcuratedDistance < 14.0f)
+        {
+            agent.velocity = new Vector3(0, 0, 0);
+        }
+
+        // 炎の攻撃を受けたときの処理
+        if (target.GetComponent<PlayerManager>().fireFlag)
+        {
+            if(fireReceivedCounter > 400)
+            {
+                Invoke("FireDamage", 0.45f);
+                fireReceivedCounter = 0;
+            }
+            
+        }
+        fireReceivedCounter++;
+
+        // 岩の攻撃を受けたときの処理
+        if(rock1.GetComponent<RockManager>().reachedToEnemy || rock2.GetComponent<RockManager>().reachedToEnemy)
+        {
+            if(rockReceivedCounter > 400)
+            {
+                Damage(100);
+                rockReceivedCounter = 0;
+            }
+        }
+        rockReceivedCounter++;
+    }
+
+    void FireDamage()
+    {
+        Damage(20);
     }
     
     void Damage(int damage)
@@ -59,9 +109,22 @@ public class BoarManager : MonoBehaviour
         {
             Debug.Log("Boar HP:" + hp);
         }
-        else if (hp == 0)
+        else if (hp <= 0)
         {
             Debug.Log("Boarは死んだ");
+            Renderer[] renderers = GetComponentsInChildren<Renderer>();
+            for (int i=0; i<renderers.Length; i++)
+            {
+                Renderer r = renderers[i];
+                Debug.Log(r.ToString());
+                if (r.name.Equals("Body"))
+                {
+                    r.material.color = vanishingColor.color;
+                    Destroy(this.gameObject, 0.5f);
+                }
+            }
+            Instantiate(vanishmentParticle, this.transform.position, Quaternion.identity);
+            //Instantiate(vanishmentParticle2, this.transform.position, Quaternion.identity);
         }
     }
     

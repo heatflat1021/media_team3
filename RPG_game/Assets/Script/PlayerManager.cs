@@ -23,8 +23,8 @@ public class PlayerManager : MonoBehaviour
 
     // 炎関連
     public GameObject fire;
-    bool fireFlag = false;
-    int fireCounter = 0;
+    public bool fireFlag = false;
+    public int fireCounter = 0;
 
     // 岩関連
     public GameObject rock1;
@@ -61,12 +61,12 @@ public class PlayerManager : MonoBehaviour
                 // animator.SetTrigger("Attack");
 
                 // 炎コマンドの起動
-                // if (!fireFlag)
-                // {
-                //     Debug.Log("炎");
-                //     animator.SetTrigger("Fire");
-                //     fireFlag = true;
-                // }
+                if (!fireFlag)
+                {
+                    Debug.Log("炎");
+                    animator.SetTrigger("Fire");
+                    fireFlag = true;
+                }
 
                 // 岩のサイコキネシス
                 rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
@@ -124,8 +124,8 @@ public class PlayerManager : MonoBehaviour
             {
                 Debug.Log("MAGIC2");
                 // 岩のサイコキネシス
-                rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
-                rock2.transform.Translate(0, -0.2f + UnityEngine.Random.value, 0);
+                rock1.transform.Translate(0, 3.2f - UnityEngine.Random.value, 0);
+                rock2.transform.Translate(0, -3.2f + UnityEngine.Random.value, 0);
                 rockFlag = true;
             }
 
@@ -183,7 +183,7 @@ public class PlayerManager : MonoBehaviour
         // 岩の重力落下
         if (!rockFlag)
         {
-            if (rock1.transform.position.y > 4.3)
+            if (rock1.transform.position.y > 4.3 && !rock1.GetComponent<RockManager>().reachedToEnemy)
             {
                 rock1.transform.Translate(0, 0.01f, 0);
             }
@@ -225,7 +225,7 @@ public class PlayerManager : MonoBehaviour
             hp = 0;
         }
         playerUIManager.UpdateHP(hp);
-        Debug.Log("Arthur HP:" + hp);
+        Debug.Log("Arthur HP:" + hp*160);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -59,7 +59,10 @@ class DataCashQueue():
         self.queue.append(new_data)
     
     def reshape(self):
-        X = np.array(self.queue)
+        X = np.array(self.queue, dtype="float32")
+        min = X.min()
+        max = X.max()
+        X = (X-min)/(max-min)
         X = X.reshape(1, X.shape[0], X.shape[1], 1)
         return X
     
@@ -328,6 +331,12 @@ class Cortex():
         
         refY, refZ = (sum(y_data) / len(y_data)), (sum(z_data) / len(z_data))
         return refY, refZ
+    
+    def normalize(x):
+        min = x.min()
+        max = x.max()
+        result = (x-min)/(max-min)
+        return result
 
     def sub_request_and_realtime_process(self, minY, maxY, minZ, maxZ, refY, refZ):
         model = tf.keras.models.load_model('./../model.h5', compile=True)
@@ -356,6 +365,7 @@ class Cortex():
             # EEGによるコマンド生成
             if 'eeg' in new_data:
                 eeg_cache.update(new_data['eeg'][2:16])
+                print(new_data['eeg'][2:16])
                 skip_counter += 1
                 if eeg_cache.isFulfilled() and skip_counter % EEG_COMMAND_GENERATION_SKIP_RATE == 0:
                     eeg_command = eeg_commands[np.argmax(model.predict(eeg_cache.reshape()))]
@@ -363,6 +373,8 @@ class Cortex():
 
                     most_common = eeg_command_cache.getMostCommon()
 
+                    print(eeg_command)
+                    print("[EEG] {}".format(most_common))
                     try:
                         f = open(eeg_file_path, mode='w')
                         f.write(most_common)
@@ -391,7 +403,7 @@ class Cortex():
                 else:
                     mot_command = 'LEFT'
 
-                print("[MOT] {}".format(mot_command))
+                # print("[MOT] {}".format(mot_command))
                 try:
                     f = open(mot_file_path, mode='w')
                     f.write(mot_command)
