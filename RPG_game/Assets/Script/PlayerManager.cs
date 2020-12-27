@@ -7,6 +7,9 @@ using System.Text;
 
 public class PlayerManager : MonoBehaviour
 {
+    public Transform target;
+    public Transform player;
+    
     float straightSpeed = 24.0f;
     float rotationSpeed = 2.0f;
 
@@ -47,7 +50,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     void Update()
-    {
+    {//岩とplayerの距離
+        var heading = target.position - player.position;
+        var distance = heading.magnitude;
+
+        //
         if (debugMode) // デバッグ時
         {
             //移動入力
@@ -69,8 +76,11 @@ public class PlayerManager : MonoBehaviour
                 }
 
                 // 岩のサイコキネシス
-                rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
-                rock2.transform.Translate(0, -0.2f + UnityEngine.Random.value, 0);
+                if (distance < 50)
+                {
+                    rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
+                    rock2.transform.Translate(0, -0.2f + UnityEngine.Random.value, 0);
+                }
             }
         }
         else // 本番時
