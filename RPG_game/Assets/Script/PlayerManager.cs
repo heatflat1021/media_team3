@@ -38,6 +38,8 @@ public class PlayerManager : MonoBehaviour
 
     bool debugMode = true;
 
+    int damageIntervalCounter = 0;
+
 
     void Start()
     {
@@ -249,5 +251,18 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("Playerはダメージを受ける");
             Damage(damager.damage);
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        Damager damager = other.GetComponent<Damager>();
+        if (damager != null && damageIntervalCounter > 190)
+        {
+            Debug.Log("Playerはダメージを受ける");
+            Damage(damager.damage);
+            damageIntervalCounter = 0;
+        }
+        damageIntervalCounter++;
+
     }
 }
