@@ -19,7 +19,7 @@ public class BoarManager : MonoBehaviour
 
     public GameObject cursor;
     public GameObject cursor_red;
-    bool is_red = false;
+    public bool is_red = false;
     int cursor_change_counter = 0;
 
     public GameObject vanishmentParticle;

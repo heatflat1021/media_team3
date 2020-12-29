@@ -198,6 +198,7 @@ MonoBehaviour:
   maxHp: 100
   cursor: {fileID: 8733011877221338082}
   cursor_red: {fileID: 412091338}
+  is_red: 0
   vanishmentParticle: {fileID: 8296817135362344186, guid: 7319894dad8f6874886a625f1b9f6695,
     type: 3}
   vanishmentParticle2: {fileID: 7292415729545780468, guid: 497719e88aadb7d41908162cdfdde997,
@@ -15333,6 +15334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 308622478}
   cam: {fileID: 1125402709}
+  enemy: {fileID: 12736573}
 --- !u!4 &1031046612
 Transform:
   m_ObjectHideFlags: 0
