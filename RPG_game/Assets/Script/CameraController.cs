@@ -24,24 +24,24 @@ public class CameraController : MonoBehaviour
         Vector2 playerAngleVector = eularAngleToVector2(playerAngle.y);
 
         cam.transform.position = new Vector3(
-            playerPosition.x + playerAngleVector.y * backOffset + playerAngleVector.x * rightWraparound,
+            playerPosition.x + playerAngleVector.y * backOffset + playerAngleVector.x * 25 * rightWraparound * rightWraparound,
             heightOffset,
-            playerPosition.z + playerAngleVector.x * backOffset - playerAngleVector.y * rightWraparound);
-        Quaternion rot = Quaternion.Euler(0, -rightWraparound, 0);
+            playerPosition.z + playerAngleVector.x * backOffset - playerAngleVector.y * 25 * rightWraparound * rightWraparound);
+        Quaternion rot = Quaternion.Euler(0, -25 * rightWraparound * rightWraparound, 0);
         cam.transform.rotation = player.transform.rotation * rot;
 
         if (enemy == null || !enemy.GetComponentInChildren<BoarManager>().is_red)
         {
             if(rightWraparound > 0.0f)
             {
-                rightWraparound -= 1.0f;
+                rightWraparound -= 0.025f;
             }
         }
         else
         {
-            if(rightWraparound < 25.0f)
+            if(rightWraparound < 1.0f)
             {
-                rightWraparound += 1.0f;
+                rightWraparound += 0.025f;
             }
         }
 
