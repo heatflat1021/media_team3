@@ -162,7 +162,12 @@ public class PlayerManager : MonoBehaviour
             }
 
             // TODO: モーションデータから操作
-            if(input == "STRAIGHT")
+            if (fireFlag)
+            {
+                rotation = 0;
+                rotationSpeed = 0;
+            }
+            else if(input == "STRAIGHT")
             {
                 rotation = 0;
                 rotationSpeed = 0;
