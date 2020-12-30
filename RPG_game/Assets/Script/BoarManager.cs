@@ -71,7 +71,7 @@ public class BoarManager : MonoBehaviour
         // 炎の攻撃を受けたときの処理
         if (target.GetComponent<PlayerManager>().fireFlag)
         {
-            if(fireReceivedCounter > 400)
+            if(fireReceivedCounter > 400 && distance(this.gameObject.transform.position, target.position) < 26.0f)
             {
                 Invoke("FireDamage", 0.45f);
                 fireReceivedCounter = 0;
@@ -90,6 +90,11 @@ public class BoarManager : MonoBehaviour
             }
         }
         rockReceivedCounter++;
+    }
+
+    float distance(Vector3 v1, Vector3 v2)
+    {
+        return Mathf.Sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.y - v2.y));
     }
 
     void FireDamage()
