@@ -18418,6 +18418,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 490424210}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1218621644
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/HairDesigner/Hidden
+  m_Shader: {fileID: 4800000, guid: 0f4d31dffed594644a83f16f497abe28, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats: []
+    m_Colors: []
 --- !u!1001 &1224824966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24358,6 +24379,122 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1708632599}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1732259575
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HD_FurShellcpy
+  m_Shader: {fileID: 4800000, guid: cde6b2ab875a7d4489252ab2b9dd1d62, type: 3}
+  m_ShaderKeywords: _EMISSION
+  m_LightmapFlags: 1
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BrushTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DensityTex:
+        m_Texture: {fileID: 2800000, guid: 156b9856ea95cf54495ae3eedf145e94, type: 3}
+        m_Scale: {x: 20, y: 20}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 15168fa13b3c4934baa590b1f6f6f0df, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: d1152fe512502354f996ed945e024943, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BrushFactor: 0
+    - _BumpScale: 1
+    - _ColorBias: 0.5
+    - _ColorTexIntensity: 1
+    - _Curl: 0
+    - _CurlAngle: 11.8
+    - _CurlNumber: 0
+    - _CurlPower: 0.457
+    - _CurlRadius: 4.74
+    - _CurlRnd: 0
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _FurFactor: 0.97
+    - _FurLength: 0.04
+    - _GlossMapScale: 1
+    - _Glossiness: 0
+    - _GlossyReflections: 1
+    - _Gravity: 0
+    - _MaskLOD: 0.5
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _RimPower: 1
+    - _RootShadow: 0.868
+    - _Scale: 1
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Thickness: 0.585
+    - _TipThickness: 0
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RootColor: {r: 0, g: 0.19833922, b: 1, a: 1}
+    - _TipColor: {r: 0.20069422, g: 0.31401345, b: 0.7735849, a: 1}
 --- !u!1001 &1733667654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31388,6 +31525,9 @@ GameObject:
   - component: {fileID: 7760380700562563302}
   - component: {fileID: 8485412233678526941}
   - component: {fileID: 8485412233678526942}
+  - component: {fileID: 8485412233678526945}
+  - component: {fileID: 8485412233678526944}
+  - component: {fileID: 8485412233678526943}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -31421,6 +31561,324 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+--- !u!114 &8485412233678526943
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8485412233678526940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 583a69e216c2d23458aaa95b2b7303a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_shader: {fileID: 4800000, guid: cde6b2ab875a7d4489252ab2b9dd1d62, type: 3}
+  m_defaultTransparent: {fileID: 0}
+  m_generator: {fileID: 8485412233678526944}
+  m_mainTex: {fileID: 2800000, guid: 15168fa13b3c4934baa590b1f6f6f0df, type: 3}
+  m_mainTexScale: {x: 1, y: 1}
+  m_mainTexOffset: {x: 0, y: 0}
+  m_densityTex: {fileID: 2800000, guid: 156b9856ea95cf54495ae3eedf145e94, type: 3}
+  m_densityTexScale: {x: 20, y: 20}
+  m_densityTexOffset: {x: 0, y: 0}
+  m_normalTex: {fileID: 2800000, guid: d1152fe512502354f996ed945e024943, type: 3}
+  m_normalStrength: {x: 0.43, y: 0.1}
+  m_maskTex: {fileID: 0}
+  m_maskTexScale: {x: 1, y: 1}
+  m_maskTexOffset: {x: 0, y: 0}
+  m_brushTex: {fileID: 0}
+  m_colorTex: {fileID: 0}
+  m_colorTexScale: {x: 1, y: 1}
+  m_colorTexOffset: {x: 0, y: 0}
+  m_furLength: 0.02
+  m_thickness: 0.585
+  m_curlNumber: 0
+  m_curlRadius: 4.74
+  m_curlRnd: 0
+  m_maskLOD: 0.5
+  m_gravity: 0
+  m_wind: 1
+  m_windTurbulenceFrequency: 0.1
+  m_brushFactor: 1
+  m_scale: 1
+  m_smoothness: 0
+  m_metallic: 0
+  m_emission: 0
+  m_emissionPower: 1
+  m_AO: 0.5
+  m_RimColor: {r: 0, g: 0, b: 0, a: 1}
+  m_RimPower: 1
+  m_RootColor: {r: 0, g: 0.19833922, b: 1, a: 1}
+  m_TipColor: {r: 0.20069422, g: 0.31401345, b: 0.7735849, a: 1}
+  m_ColorBias: 0.5
+  m_ColorBiasLength: 0.5
+  m_BrushBend: {x: 0, y: 0}
+--- !u!114 &8485412233678526944
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8485412233678526940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6659f60e18ab52946a7e943a2e96db04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_layerType: 3
+  m_version: 1.9.0
+  m_skinnedMesh: {fileID: 0}
+  m_meshRenderer: {fileID: 0}
+  m_hd: {fileID: 8485412233678526945}
+  m_hairStrand: {fileID: 0}
+  m_hair: {fileID: 0}
+  m_initialized: 1
+  m_scale: 1
+  m_params:
+    m_curv:
+      m_startPosition: {x: 0, y: 0, z: 0}
+      m_endPosition: {x: 0, y: 0, z: 1}
+      m_startTangent: {x: 0, y: 0.1, z: 0}
+      m_endTangent: {x: 0, y: 0, z: 0}
+      m_startAngle: 0
+      m_endAngle: 0
+      m_length: 0
+      m_upRef: {x: 0, y: 1, z: 0}
+      legacy_1_5_1: 0
+    m_taper: {x: 1, y: 1}
+    m_bendX: 1
+    m_length: 2
+    m_HairResolutionX: 2
+    m_HairResolutionY: 3
+    m_randomSrandFactor: 0
+    m_offset: 0
+    m_gravityFactor: 0
+    m_normalToTangent: 0
+  m_data:
+    localpos: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    normal: {x: 0, y: 1, z: 0}
+    scale: 1
+    strand:
+      localpos: {x: 0, y: 0, z: 0}
+      worldpos: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      normal: {x: 0, y: 1, z: 0}
+      scale: 1
+      offset: 0
+      curve:
+        m_startPosition: {x: 0, y: 0, z: 0}
+        m_endPosition: {x: 0, y: 0, z: 0}
+        m_startTangent: {x: 0, y: 0, z: 0}
+        m_endTangent: {x: 0, y: 0, z: 0}
+        m_startAngle: 0
+        m_endAngle: 0
+        m_length: 0
+        m_upRef: {x: 0, y: 1, z: 0}
+        legacy_1_5_1: 0
+      mCurve:
+        m_curves:
+        - m_startPosition: {x: 0, y: 0, z: 0}
+          m_endPosition: {x: 0, y: 0, z: 0}
+          m_startTangent: {x: 0, y: 0, z: 0}
+          m_endTangent: {x: 0, y: 0, z: 0}
+          m_startAngle: 0
+          m_endAngle: 0
+          m_length: 0
+          m_upRef: {x: 0, y: 1, z: 0}
+          legacy_1_5_1: 0
+        m_startAngle: 0
+        m_endAngle: 0
+        m_offset: {x: 0, y: 0, z: 0}
+        m_rotation: {x: 0, y: 0, z: 0, w: 1}
+      layer: 0
+      meshTriId: -1
+      triLock:
+        m_faceId: -1
+        m_facePerimeterLocked: 1
+        m_position:
+          weights:
+          - 0.33333334
+          - 0.33333334
+          - 0.33333334
+          normalOffset: 0
+        m_direction:
+          weights:
+          - 0.33333334
+          - 0.33333334
+          - 0.33333334
+          normalOffset: 0
+        m_up:
+          weights:
+          - 0.33333334
+          - 0.33333334
+          - 0.33333334
+          normalOffset: 0
+        m_cdata:
+          vPos:
+          - {x: 0, y: 0, z: 0}
+          - {x: 0, y: 0, z: 0}
+          - {x: 0, y: 0, z: 0}
+          vectorProjLength: 1
+          localNormalFace: {x: 0, y: 0, z: 0}
+          localBCenter: {x: 0, y: 0, z: 0}
+          upFaceReference: {x: 0, y: 0, z: 0}
+          facePerimeter: 0
+          perimeter: -1
+          localPosition: {x: 0, y: 0, z: 0}
+          localDirection: {x: 0, y: 0, z: 0}
+          localUp: {x: 0, y: 0, z: 0}
+          m_lastTransformTarget: {fileID: 0}
+          m_lastTransformMesh: {fileID: 0}
+    layer: 0
+  m_requirePainting: 0
+  m_skinMeshGenerationRot: {x: 0, y: 0, z: 0, w: 1}
+  m_skinMeshGenerationPos: {x: 0, y: 0, z: 0}
+  m_enable: 1
+  m_name: Layer 1
+  m_gravity: {x: 0, y: -9.81, z: 0}
+  m_pid:
+    m_target: {x: 0, y: 0, z: 0}
+    m_params:
+      kp: 2
+      ki: 2
+      kd: 0
+      deltaMax: 1
+      limits: {x: -3.4028235e+38, y: 3.4028235e+38}
+    m_pidX:
+      lastTime: 0
+      m_target: 0
+      m_timeScale: 1
+      m_params:
+        kp: 2
+        ki: 2
+        kd: 0
+        deltaMax: 1
+        limits: {x: -3.4028235e+38, y: 3.4028235e+38}
+    m_pidY:
+      lastTime: 0
+      m_target: 0
+      m_timeScale: 1
+      m_params:
+        kp: 2
+        ki: 2
+        kd: 0
+        deltaMax: 1
+        limits: {x: -3.4028235e+38, y: 3.4028235e+38}
+    m_pidZ:
+      lastTime: 0
+      m_target: 0
+      m_timeScale: 1
+      m_params:
+        kp: 2
+        ki: 2
+        kd: 0
+        deltaMax: 1
+        limits: {x: -3.4028235e+38, y: 3.4028235e+38}
+  m_rndSeed: 0
+  m_direction: {x: 0, y: 0, z: 0}
+  _editorDelete: 0
+  m_needMeshRebuild: 0
+  m_generateBlendshapes: 0
+  m_atlasSizeX: 1
+  m_motionZones: []
+  m_hairMeshMaterial: {fileID: 2100000, guid: 4a54d469b9dc5014f8be2a968c0531fb, type: 2}
+  m_hairMeshMaterialTransparent: {fileID: 0}
+  m_meshInstance: {fileID: 0}
+  m_meshInstanceRef: {fileID: 0}
+  m_shaderParams:
+  - {fileID: 8485412233678526943}
+  m_wasInDesignTab: 0
+  m_meshLocked: 1
+  m_materialInitialized: 0
+  m_shaderNeedUpdate: 0
+  m_editorLayers: []
+  nextModifierID: 1
+  m_maxStrandLength: 1
+  m_skinningVersion160: 1
+  m_skinningVersion160_Converted: 0
+  m_dontDestroyMeshOnDestroy: 0
+  m_HairDesignerDeleted: 0
+  m_editorData:
+    m_furMaskMin: 0
+    m_furMaskMax: 1
+    m_unsavedColorTexFile: 0
+    m_unsavedBrushTexFile: 0
+    m_unsavedMaskTexFile: 0
+    m_furHeightMin: 0
+    m_furHeightMax: 1
+  m_shellCount: 30
+  m_shadowCastingMode: 1
+  m_furWidthUpscale: 0
+  m_materialsEnabled: 0100000000
+  m_useLOD: 0
+  m_selectCurrentLOD: 1
+  m_LODGroups: []
+  m_firstInitialisation: 1
+  m_furMaterial: {fileID: 1732259575}
+  m_transparencyThreshold: 1
+  m_defaultFurDensity: {fileID: 0}
+  m_mr: {fileID: 0}
+  m_smr: {fileID: 7760380700562563302}
+  m_r: {fileID: 7760380700562563302}
+  m_rootData: {fileID: 0}
+  m_hiddenMaterial: {fileID: 1218621644}
+  m_verticeIds: []
+  m_bakeVertexID: 0
+  m_gpuSkinning: 0
+  m_instancingMode: 2
+  _useHDRPInstancingTrick: 0
+  m_MII_useRendererBoundingBox: 1
+  m_MII_boundingBoxExtents: {x: 1, y: 1, z: 1}
+  m_MII_boundingBoxCenter: {x: 0, y: 0, z: 0}
+  m_MII_showBoundingBox: 0
+  m_MII_boundingBoxScale: 1.5
+  m_MII_drawBoundingBox: 0
+  m_MII_Bounbs:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+--- !u!114 &8485412233678526945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8485412233678526940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33410d3feabf367459b4bebb6aaaa236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_version: 1.9.0
+  m_prefabName: Layers
+  m_meshSaved: 0
+  m_defaultMaterial: {fileID: 2100000, guid: 4cd4ffabd835cf7418ea22f2725c9575, type: 2}
+  m_poseBoneRotations: []
+  m_debugDontHideCollider: 0
+  m_defaultFurMaterial: {fileID: 2100000, guid: 4a54d469b9dc5014f8be2a968c0531fb,
+    type: 2}
+  m_defaultFurDensity: {fileID: 2800000, guid: aac30c42c39efa4449b068bae978b5fd, type: 3}
+  m_smr: {fileID: 7760380700562563302}
+  m_mr: {fileID: 0}
+  m_mf: {fileID: 0}
+  m_tpose:
+    m_inititialized: 0
+    m_initPos: []
+    m_initRot: []
+    m_initScale: []
+    m_rootInitPos: {x: 0, y: 0, z: 0}
+    m_rootInitRot: {x: 0, y: 0, z: 0, w: 0}
+    m_rootParent: {fileID: 0}
+    m_rootBoneID: 0
+    m_smr: {fileID: 0}
+    m_TPoseMode: 1
+  m_windZone: {fileID: 0}
+  m_windZoneDir: {x: 0, y: 0, z: 0, w: 0}
+  m_windZoneParam: {x: 0, y: 0, z: 0, w: 0}
+  m_generators:
+  - {fileID: 8485412233678526944}
+  m_generatorId: 0
 --- !u!4 &8699525680747813520
 Transform:
   m_ObjectHideFlags: 0

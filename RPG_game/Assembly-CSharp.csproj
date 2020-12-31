@@ -66,6 +66,25 @@
     <Compile Include="Assets\EnemyAttackBehavior.cs" />
     <Compile Include="Assets\EnemyIdleBehavior.cs" />
     <Compile Include="Assets\EnemyRunBehavior.cs" />
+    <Compile Include="Assets\HairDesigner\Demo\Fur\HairDesignerFurDemo.cs" />
+    <Compile Include="Assets\HairDesigner\Demo\Fur\HairDesignerFurDemo2.cs" />
+    <Compile Include="Assets\HairDesigner\Demo\Fur\RandomMotion.cs" />
+    <Compile Include="Assets\HairDesigner\Demo\HairCut\HairDesigner_Demo1.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesigner.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerBone.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerGeneratorAdvancedFur.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerGeneratorFurShell.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerGeneratorLongHair.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerGeneratorMesh.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerMeshInstance.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerRuntimeLayer.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerRuntimeLayerLoader.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerShaderAdvancedFur.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerShaderAtlas.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerShaderFire.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerShaderFurShell.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerShaderProcedural.cs" />
+    <Compile Include="Assets\HairDesigner\Scripts\HairDesignerShaderProcedural_v2.cs" />
     <Compile Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs" />
     <Compile Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
@@ -121,8 +140,12 @@
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />
+    <None Include="Assets\HairDesigner\Shaders\Resources\HairDesigner_FurSkinning.compute" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_Procedural_v2.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset3.shader" />
+    <None Include="Assets\HairDesigner\Shaders\AdvancedFur\AdvancedFur_Common.cginc" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_UnityPBSLighting.cginc" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlurDX11.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\VignettingShader.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurves.shader" />
@@ -140,6 +163,7 @@
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Adaptation.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
+    <None Include="Assets\HairDesigner\Shaders\AdvancedFur\AdvancedFur_Shadows.cginc" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceAmbientObscurance.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
@@ -155,8 +179,10 @@
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\SimpleClear.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\ContrastComposite.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\MinMaxReduction.shader" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_Atlas_transparent.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\Bokeh34.shader" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_Atlas.cginc" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionEffect.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\FisheyeShader.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
@@ -164,32 +190,49 @@
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBloom.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner.cginc" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_Atlas.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfField34.shader" />
+    <None Include="Assets\HairDesigner\Shaders\AdvancedFur\AdvancedFurShell.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfFieldDX11.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularSmooth.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
+    <None Include="Assets\HairDesigner\Shaders\AdvancedFur\Resources\HairDesigner_AdvancedFurMotion.compute" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\MotionBlur.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableBlur.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularDisplacement.shader" />
+    <None Include="Assets\HairDesigner\Textures\Fur_texture\credits.txt" />
+    <None Include="Assets\HairDesigner\Demo\Shader\Standard.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
+    <None Include="Assets\HairDesigner\Shaders\AdvancedFur\AdvancedFur_Strand.cginc" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\ShowAlphaChannel.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\GrayscaleEffect.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_Standard.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfFieldScatter.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\EdgeDetectNormals.shader" />
+    <None Include="Assets\HairDesigner\Shaders\AdvancedFur\AdvancedFur_Shell.cginc" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_FurShell.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAA2.shader" />
+    <None Include="Assets\HairDesigner\Shaders\AdvancedFur\AdvancedFur_PBR.cginc" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_Procedural_v2.cginc" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_Procedural.shader" />
+    <None Include="Assets\HairDesigner\Shaders\HairDesigner_Fire.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
+    <None Include="Assets\HairDesigner\Demo\Fur\Models from unity tutorial\Materials\Rim Lit Bumped Specular.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\NFAA.shader" />
+    <None Include="Assets\HairDesigner\Shaders\Resources\HairDesigner_Hidden.shader" />
+    <None Include="Assets\HairDesigner\Shaders\AdvancedFur\AdvancedFurStrand.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset2.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
     <Reference Include="UnityEngine">
@@ -374,6 +417,9 @@
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>C:/Program Files/Unity/2019.4.12f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="HairDesigner_Runtime">
+      <HintPath>C:/Users/heatflat/Desktop/media_team3/RPG_game/Assets/HairDesigner/Scripts/HairDesigner_Runtime.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/2019.4.12f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
