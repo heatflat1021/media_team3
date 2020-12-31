@@ -66,10 +66,6 @@
     <Compile Include="Assets\EnemyAttackBehavior.cs" />
     <Compile Include="Assets\EnemyIdleBehavior.cs" />
     <Compile Include="Assets\EnemyRunBehavior.cs" />
-    <Compile Include="Assets\HairDesigner\Demo\Fur\HairDesignerFurDemo.cs" />
-    <Compile Include="Assets\HairDesigner\Demo\Fur\HairDesignerFurDemo2.cs" />
-    <Compile Include="Assets\HairDesigner\Demo\Fur\RandomMotion.cs" />
-    <Compile Include="Assets\HairDesigner\Demo\HairCut\HairDesigner_Demo1.cs" />
     <Compile Include="Assets\HairDesigner\Scripts\HairDesigner.cs" />
     <Compile Include="Assets\HairDesigner\Scripts\HairDesignerBone.cs" />
     <Compile Include="Assets\HairDesigner\Scripts\HairDesignerGeneratorAdvancedFur.cs" />
@@ -205,7 +201,6 @@
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\TessellationShaders\Shaders\BumpedSpecularDisplacement.shader" />
     <None Include="Assets\HairDesigner\Textures\Fur_texture\credits.txt" />
-    <None Include="Assets\HairDesigner\Demo\Shader\Standard.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
     <None Include="Assets\HairDesigner\Shaders\AdvancedFur\AdvancedFur_Strand.cginc" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\ShowAlphaChannel.shader" />
@@ -229,7 +224,6 @@
     <None Include="Assets\HairDesigner\Shaders\HairDesigner_Fire.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
-    <None Include="Assets\HairDesigner\Demo\Fur\Models from unity tutorial\Materials\Rim Lit Bumped Specular.shader" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\NFAA.shader" />
     <None Include="Assets\HairDesigner\Shaders\Resources\HairDesigner_Hidden.shader" />
     <None Include="Assets\HairDesigner\Shaders\AdvancedFur\AdvancedFurStrand.shader" />
