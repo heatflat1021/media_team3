@@ -8,7 +8,7 @@ from cortex import Cortex
 import EmotivInfo
 
 MESUREMENT_SECONDS = 20
-MESUREMENT_TIMES = 10
+MESUREMENT_TIMES = 0
 
 def ready_confirm():
     print("準備ができたらEnterキーを押してください。")
@@ -49,7 +49,7 @@ class Record():
 		print("end recording -------------------------")
 
 commands = [
-    Command("neutral", "平常心をイメージしてください。", MESUREMENT_TIMES),
+    Command("neutral", "平常心をイメージしてください。", 20),
     Command("straight", "直進をイメージしてください。", MESUREMENT_TIMES),
     Command("sword", "剣で攻撃するイメージをしてください。", MESUREMENT_TIMES),
     Command("magic1", "火炎を放出するイメージをしてください。", MESUREMENT_TIMES),

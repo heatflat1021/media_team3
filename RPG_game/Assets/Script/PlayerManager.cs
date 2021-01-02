@@ -24,6 +24,10 @@ public class PlayerManager : MonoBehaviour
     Rigidbody rb;
     Animator animator;
 
+    // 攻撃関連
+    public bool attackFlag = false;
+    public int attackCounter = 0;
+
     // 炎関連
     public GameObject fire;
     public bool fireFlag = false;
@@ -36,7 +40,7 @@ public class PlayerManager : MonoBehaviour
 
     string input;
 
-    bool debugMode = true;
+    bool debugMode = false;
 
     int damageIntervalCounter = 0;
 
@@ -60,28 +64,81 @@ public class PlayerManager : MonoBehaviour
         if (debugMode) // デバッグ時
         {
             //移動入力
-            straight = Input.GetAxisRaw("Vertical");
-            rotation = Input.GetAxisRaw("Horizontal");
-
-            //攻撃入力
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKey(KeyCode.RightArrow))
             {
-                // Debug.Log("攻撃");
-                // animator.SetTrigger("Attack");
+                right();
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                left();
+            }
+            else
+            {
+                front();
+            }
 
-                // 炎コマンドの起動
-                if (!fireFlag)
+            if (Input.GetKey(KeyCode.F))
+            {
+                input = "MAGIC1";
+            }else if (Input.GetKey(KeyCode.R))
+            {
+                input = "MAGIC2";
+            }else if (Input.GetKey(KeyCode.S))
+            {
+                input = "SWORD";
+            }else if (Input.GetKey(KeyCode.UpArrow)){
+                input = "STRAIGHT";
+            }
+            else
+            {
+                input = "NEUTRAL";
+            }
+
+            // TODO:  EEGデータから操作
+            Debug.Log(input);
+            if (input == "STRAIGHT")
+            {
+                straight = 1;
+                straightSpeed = 24.0f;
+                animator.SetFloat("Speed", 1.0f);
+            }
+            else
+            {
+                animator.SetFloat("Speed", 0.0f);
+                if (input == "NEUTRAL")
                 {
-                    Debug.Log("炎");
-                    animator.SetTrigger("Fire");
-                    fireFlag = true;
+                    straight = 0;
+                    straightSpeed = 0;
                 }
-
-                // 岩のサイコキネシス
-                if (distance < 50)
+                else if (input == "SWORD")
                 {
-                    rock1.transform.Translate(0, 0.2f - UnityEngine.Random.value, 0);
-                    rock2.transform.Translate(0, -0.2f + UnityEngine.Random.value, 0);
+                    if (!attackFlag)
+                    {
+                        Debug.Log("攻撃");
+                        animator.SetTrigger("Attack");
+                        attackFlag = true;
+                    }
+                }
+                else if (input == "MAGIC1")
+                {
+                    // 炎コマンドの起動
+                    if (!fireFlag)
+                    {
+                        Debug.Log("炎");
+                        animator.SetTrigger("Fire");
+                        fireFlag = true;
+                    }
+                }
+                else if (input == "MAGIC2")
+                {
+                    Debug.Log("MAGIC2");
+                    // 岩のサイコキネシス
+                    if (distance < 50)
+                    {
+                        rock1.transform.Translate(0, 3.2f - UnityEngine.Random.value, 0);
+                        rock2.transform.Translate(0, -3.2f + UnityEngine.Random.value, 0);
+                        rockFlag = true;
+                    }
                 }
             }
         }
@@ -107,40 +164,46 @@ public class PlayerManager : MonoBehaviour
 
             // TODO:  EEGデータから操作
             Debug.Log(input);
-            if(input == "STRAIGHT")
+            if (input == "STRAIGHT")
             {
                 straight = 1;
                 straightSpeed = 24.0f;
+                animator.SetFloat("Speed", 1.0f);
             }
-            else if(input == "NEUTRAL")
+            else
             {
+                animator.SetFloat("Speed", 0.0f);
                 straight = 0;
                 straightSpeed = 0;
-            }
-            else if(input == "SWORD")
-            {
-                Debug.Log("攻撃");
-                animator.SetTrigger("Attack");
-            }
-            else if(input == "MAGIC1")
-            {
-                // 炎コマンドの起動
-                if (!fireFlag)
+                if (input == "NEUTRAL")
                 {
-                    Debug.Log("炎");
-                    animator.SetTrigger("Fire");
-                    fireFlag = true;
+
                 }
-            }
-            else if(input == "MAGIC2")
-            {
-                Debug.Log("MAGIC2");
-                // 岩のサイコキネシス
-                if (distance < 50)
+                else if (input == "SWORD")
                 {
-                    rock1.transform.Translate(0, 3.2f - UnityEngine.Random.value, 0);
-                    rock2.transform.Translate(0, -3.2f + UnityEngine.Random.value, 0);
-                    rockFlag = true;
+                    Debug.Log("攻撃");
+                    animator.SetTrigger("Attack");
+                }
+                else if (input == "MAGIC1")
+                {
+                    // 炎コマンドの起動
+                    if (!fireFlag)
+                    {
+                        Debug.Log("炎");
+                        animator.SetTrigger("Fire");
+                        fireFlag = true;
+                    }
+                }
+                else if (input == "MAGIC2")
+                {
+                    Debug.Log("MAGIC2");
+                    // 岩のサイコキネシス
+                    if (distance < 50)
+                    {
+                        rock1.transform.Translate(0, 3.2f - UnityEngine.Random.value, 0);
+                        rock2.transform.Translate(0, -3.2f + UnityEngine.Random.value, 0);
+                        rockFlag = true;
+                    }
                 }
             }
 
@@ -169,18 +232,15 @@ public class PlayerManager : MonoBehaviour
             }
             else if(input == "STRAIGHT")
             {
-                rotation = 0;
-                rotationSpeed = 0;
+                front();
             }
             else if(input == "RIGHT")
             {
-                rotation = 1;
-                rotationSpeed = 2.0f;
+                right();
             }
             else if(input == "LEFT")
             {
-                rotation = -1;
-                rotationSpeed = 2.0f;
+                left();
             }
         }
 
@@ -200,6 +260,17 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
+        // 攻撃コマンドの更新
+        if (attackFlag)
+        {
+            attackCounter++;
+            if(attackCounter == 80)
+            {
+                attackCounter = 0;
+                attackFlag = false;
+            }
+        }
+
         // 岩の重力落下
         if (!rockFlag)
         {
@@ -212,6 +283,24 @@ public class PlayerManager : MonoBehaviour
                 rock2.transform.Translate(0, -0.03f, 0);
             }
         }
+    }
+
+    private void front()
+    {
+        rotation = 0;
+        rotationSpeed = 0;
+    }
+
+    private void right()
+    {
+        rotation = 1;
+        rotationSpeed = 2.0f;
+    }
+
+    private void left()
+    {
+        rotation = -1;
+        rotationSpeed = 2.0f;
     }
 
     private void FixedUpdate()

@@ -60,15 +60,23 @@ class DataCashQueue():
     
     def reshape(self):
         X = np.array(self.queue, dtype="float32")
-        min = X.min()
-        max = X.max()
-        X = (X-min)/(max-min)
+        mean = np.mean(X)
+        std = np.std(X, ddof=1)
+        X = (X - mean) / std
         X = X.reshape(1, X.shape[0], X.shape[1], 1)
         return X
     
     def getMostCommon(self):
         counter = Counter(self.queue)
-        return counter.most_common()[0][0]
+        most_common = counter.most_common()[0][0]
+        most_command_counter = 0
+        for item in self.queue:
+            if item == most_common:
+                most_command_counter += 1
+        if most_command_counter < 8:
+            return "NEUTRAL"
+        else:
+            return most_common
 
 class Cortex():
     def __init__(self, user, debug_mode=True):
@@ -378,6 +386,14 @@ class Cortex():
                     try:
                         f = open(eeg_file_path, mode='w')
                         f.write(most_common)
+                    except PermissionError as e:
+                        print("PermissionErrorが発生")
+                    finally:
+                        f.close()
+                    try:
+                        f = open("./../cacs.txt", mode='a')
+                        f.write(most_common)
+                        f.write("\n")
                     except PermissionError as e:
                         print("PermissionErrorが発生")
                     finally:
