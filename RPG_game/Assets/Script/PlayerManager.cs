@@ -40,7 +40,7 @@ public class PlayerManager : MonoBehaviour
 
     string input;
 
-    bool debugMode = false;
+    bool debugMode = true;
 
     int damageIntervalCounter = 0;
 

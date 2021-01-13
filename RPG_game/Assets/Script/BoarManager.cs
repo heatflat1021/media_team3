@@ -14,6 +14,7 @@ public class BoarManager : MonoBehaviour
     public int maxHp = 100;
     int hp;
 
+    int swordReceivedCounter = 0;
     int fireReceivedCounter = 0;
     int rockReceivedCounter = 0;
 
@@ -68,12 +69,25 @@ public class BoarManager : MonoBehaviour
             agent.velocity = new Vector3(0, 0, 0);
         }
 
+        if (target.GetComponent<PlayerManager>().attackFlag)
+        {
+            if(swordReceivedCounter > 300)
+            {
+                Invoke("FireDamage", 0.3f);
+                Invoke("FireDamage", 0.9f);
+                swordReceivedCounter = 0;
+            }
+        }
+        swordReceivedCounter++;
+
         // 炎の攻撃を受けたときの処理
         if (target.GetComponent<PlayerManager>().fireFlag)
         {
             if(fireReceivedCounter > 400 && distance(this.gameObject.transform.position, target.position) < 26.0f)
             {
-                Invoke("FireDamage", 0.45f);
+                Invoke("FireDamage", 0.5f);
+                Invoke("FireDamage", 0.8f);
+                Invoke("FireDamage", 1.2f);
                 fireReceivedCounter = 0;
             }
             

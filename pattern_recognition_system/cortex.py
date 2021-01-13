@@ -73,7 +73,7 @@ class DataCashQueue():
         for item in self.queue:
             if item == most_common:
                 most_command_counter += 1
-        if most_command_counter < 8:
+        if most_command_counter < 5:
             return "NEUTRAL"
         else:
             return most_common
